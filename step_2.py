@@ -55,11 +55,20 @@ class BigramLanguageModel(nn.Module):
 
         # idx and targets are both (B,T) tensor of integers
         logits = self.token_embedding_table(idx) # (B,T,C)
-        # idx[b, t] = i -->> pluck-up the row = self.token_embedding_table.weight[i], where row.size=C
+        # idx[b, t] = i -->> pluck-out the row = self.token_embedding_table.weight[i], where row.size=C
 
-        return logits # B,T,C
+        if targets is None:
+            loss = None
+        else:
+            B, T, C = logits.shape
+            logits = logits.view(B*T, C)
+            targets = targets.view(B*T)
+            loss = F.cross_entropy(logits, targets)
+
+        return logits, loss # logits=(B,T,C)
 
 m = BigramLanguageModel(vocab_size)
-out = m(xb, yb) # B,T,C
-print(out.shape)
+logits, loss = m(xb, yb) # B,T,C
+print(logits.shape)
+print(loss.shape)
 

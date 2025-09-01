@@ -1,3 +1,4 @@
+import torch
 
 # read it in to inspect it
 with open('input.txt', 'r', encoding='utf-8') as f:
@@ -29,14 +30,14 @@ print(decode(encode("hii there")))
 
 #####################################################
 # let's now encode the entire text dataset and store it into a torch.Tensor
-import torch # we use PyTorch: https://pytorch.org
+
 data = torch.tensor(encode(text), dtype=torch.long)
 print(data.shape, data.dtype)
 #print(data[:1000]) 
 
 #####################################################
 # Let's now split up the data into train and validation sets
-n = int(0.9*len(data)) # first 90% will be train, rest val
+n = int(0.9*len(data))
 train_data = data[:n]
 val_data = data[n:]
 
