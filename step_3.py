@@ -83,11 +83,11 @@ class BigramLanguageModel(nn.Module):
         return idx
 
 
-m = BigramLanguageModel(vocab_size)
-logits, loss = m(xb, yb)
+model = BigramLanguageModel(vocab_size)
+logits, loss = model(xb, yb)
 print(logits.shape)
 print(loss)
 
 prompt = torch.zeros((1, 1), dtype=torch.long)
-generated = m.generate(idx = prompt, max_new_tokens=100)
+generated = model.generate(idx = prompt, max_new_tokens=100)
 print(decode(generated[0].tolist()))
