@@ -21,7 +21,6 @@ encode = lambda s: [stoi[c] for c in s] # encoder: take a string, output a list 
 decode = lambda l: ''.join([itos[i] for i in l]) # decoder: take a list of integers, output a string
 
 
-import torch
 data = torch.tensor(encode(text), dtype=torch.long)
 print(data.shape, data.dtype)
 n = int(0.9*len(data)) # first 90% will be train, rest val
