@@ -1,0 +1,18 @@
+*.pyc
+*__pycache__/
+
+# Environments
+.env
+.env-django
+.env-server
+.venv
+env/
+venv/
+ENV/
+env.bak/
+
+# Temporary static directory
+#core/static/
+
+*.tar
+*.db-journal
