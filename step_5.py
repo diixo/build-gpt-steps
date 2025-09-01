@@ -2,11 +2,16 @@
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
+
 torch.manual_seed(1337)
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
+
+batch_size = 32
 block_size = 8
-batch_size = 4
+eval_iters = 200
+max_iters = 10_000
 
 
 with open('input.txt', 'r', encoding='utf-8') as f:
@@ -26,7 +31,6 @@ decode = lambda l: ''.join([itos[i] for i in l]) # decoder: take a list of integ
 
 
 data = torch.tensor(encode(text), dtype=torch.long)
-print(data.shape, data.dtype)
 n = int(0.9*len(data)) # first 90% will be train, rest val
 train_data = data[:n]
 val_data = data[n:]
@@ -40,10 +44,26 @@ def get_batch(split):
     ix = torch.randint(len(data) - block_size, (batch_size,))
     x = torch.stack([data[i: i+block_size] for i in ix])
     y = torch.stack([data[i+1: i+block_size+1] for i in ix])
+    x.to(device), y.to(device)
     return x, y
 
+
+@torch.no_grad()
+def estimate_loss():
+    out = {}
+    model.eval()
+    for split in ['train', 'val']:
+        losses = torch.zeros(eval_iters)
+        for k in range(eval_iters):
+            X, Y = get_batch(split)
+            logits, loss = model(X, Y)
+            losses[k] = loss.item()
+        out[split] = losses.mean()
+    model.train()
+    return out
+
 xb, yb = get_batch('train')
-print(xb.shape)
+
 
 class BigramLanguageModel(nn.Module):
 
@@ -86,6 +106,7 @@ class BigramLanguageModel(nn.Module):
 
 
 model = BigramLanguageModel(vocab_size)
+model = model.to(device)
 
 
 #######################################################################
@@ -94,7 +115,11 @@ model = BigramLanguageModel(vocab_size)
 optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4)
 
 
-for steps in range(10000):
+for iter in range(max_iters):
+
+    if iter % eval_iters == 0:
+        losses = estimate_loss()
+        print(f"step: {iter}, losses: {losses['train']:.4f}")
 
     # sample a batch of data
     xb, yb = get_batch('train')
@@ -108,7 +133,7 @@ for steps in range(10000):
 
 print(loss.item())
 
-prompt = torch.zeros((1, 1), dtype=torch.long)
+prompt = torch.zeros((1, 1), dtype=torch.long, device=device)
 generated = model.generate(idx = prompt, max_new_tokens=100)
 print(decode(generated[0].tolist()))
 
