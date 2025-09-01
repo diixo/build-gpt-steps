@@ -42,7 +42,6 @@ def get_batch(split):
 
 xb, yb = get_batch('train')
 print(xb.shape)
-exit(0)
 
 class BigramLanguageModel(nn.Module):
 
@@ -67,8 +66,8 @@ class BigramLanguageModel(nn.Module):
 
         return logits, loss # logits=(B,T,C)
 
+
 m = BigramLanguageModel(vocab_size)
 logits, loss = m(xb, yb) # B,T,C
 print(logits.shape)
 print(loss.shape)
-
