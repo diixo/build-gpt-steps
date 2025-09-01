@@ -12,6 +12,7 @@ batch_size = 32
 block_size = 8
 eval_iters = 200
 max_iters = 10_000
+n_embd = 32
 
 
 with open('input.txt', 'r', encoding='utf-8') as f:
@@ -67,16 +68,18 @@ xb, yb = get_batch('train')
 
 class BigramLanguageModel(nn.Module):
 
-    def __init__(self, vocab_size):
+    def __init__(self):
         super().__init__()
         # each token directly reads off the logits for the next token from a lookup table
-        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+        self.lm_head = nn.Linear(n_embd, vocab_size)
 
     def forward(self, idx, targets=None):
 
         # idx and targets are both (B,T) tensor of integers
-        logits = self.token_embedding_table(idx) # (B,T,C)
-        # idx[b, t] = i -->> pluck-out the row = self.token_embedding_table.weight[i], where row.size=C
+        tok_emb = self.token_embedding_table(idx) # (B,T,C)
+        logits = self.lm_head(tok_emb) #(B,T,n_emb)
+
 
         if targets is None:
             loss = None
@@ -105,7 +108,7 @@ class BigramLanguageModel(nn.Module):
         return idx
 
 
-model = BigramLanguageModel(vocab_size)
+model = BigramLanguageModel()
 model = model.to(device)
 
 
