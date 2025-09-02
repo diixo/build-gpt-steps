@@ -8,7 +8,7 @@ torch.manual_seed(1337)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-batch_size = 32 # how many independent sequences will be process in parallel
+batch_size = 4 # how many independent sequences will be process in parallel
 block_size = 8 # what is the maximum context length for prediction
 eval_iters = 500
 max_iters = 5_000
