@@ -199,11 +199,6 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
 
 for iter in range(max_iters):
-
-    if iter % eval_iters == 0:
-        losses = estimate_loss()
-        print(f"step: {iter}, losses: {losses['train']:.4f}")
-
     # sample a batch of data
     xb, yb = get_batch('train')
 
@@ -213,10 +208,14 @@ for iter in range(max_iters):
     loss.backward()
     optimizer.step()
 
+    if (iter + 1) % eval_iters == 0 or (iter == 0):
+        losses = estimate_loss()
+        print(f"step: {iter+1}, losses: {losses['train']:.4f}")
+
 
 print(loss.item())
 
 prompt = torch.zeros((1, 1), dtype=torch.long, device=device)
-generated = model.generate(idx = prompt, max_new_tokens=200)
+generated = model.generate(idx = prompt, max_new_tokens = 100)
 print(decode(generated[0].tolist()))
 
