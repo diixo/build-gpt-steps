@@ -117,11 +117,11 @@ class BigramLanguageModel(nn.Module):
 
         B, T = idx.shape
 
-        tok_emb = self.token_embedding_table(idx) # (B,T,C)
-        pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
-        x = tok_emb + pos_emb       # (B,T,C)
-        x = self.sa_heads(x)        # apply one-head of self-attention (B,T,C)
-        logits = self.lm_head(x)    #(B,T,vocab_size)
+        tok_emb = self.token_embedding_table(idx) # (B, T, C)
+        pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T, C)
+        x = tok_emb + pos_emb       # (B, T, C)
+        x = self.sa_heads(x)        # apply one-head of self-attention (B, T, C)
+        logits = self.lm_head(x)    # (B, T, vocab_size)
 
 
         if targets is None:
