@@ -20,7 +20,7 @@ value = nn.Linear(C, head_size, bias=False)
 k = key(x)      # B, T, head_size=16
 q = query(x)    # B, T, head_size=16
 
-wei = q @ k.transpose(-2, -1)   # (B, T, 16) @ (B, 16, T) -->> (B, T, T)
+wei = q @ k.transpose(-2, -1) * head_size**-0.5  # (B, T, 16) @ (B, 16, T) -->> (B, T, T)
 
 tril = torch.tril(torch.ones(T, T))
 #wei = torch.zeros((T, T))
