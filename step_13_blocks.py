@@ -127,8 +127,8 @@ class Block(nn.Module):
         self.ffwd = FeedFoward(n_embd)
 
     def forward(self, x):
-        x = x + self.sa(x)
-        x = x + self.ffwd(x)
+        x = self.sa(x)
+        x = self.ffwd(x)
         return x
 
 
