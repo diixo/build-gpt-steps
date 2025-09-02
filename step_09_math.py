@@ -10,7 +10,7 @@ x = torch.randn(B, T, C)
 print(x.shape)
 
 
-# version 4: Self-attention (SA)
+# version 4: single Head perform of self-attention
 head_size = 16
 
 key = nn.Linear(C, head_size, bias=False)
@@ -35,6 +35,7 @@ wei = F.softmax(wei, dim=-1)
 v = value(x)
 out = wei @ v
 
-print(out.shape)
+print("v:", v.shape)
+print("out:", out.shape)
 # print(wei)
 # torch.allclose(xbow, xbow3)
