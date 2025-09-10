@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 
 
-def generate_text(prompt: str, model, enc, device, device_type, ddp_rank = 0, max_length=32):
+def generate_text(prompt: str, model, enc, device, device_type, ddp_rank=0, max_length=32):
         model.eval()
         num_return_sequences = 1
 
