@@ -226,7 +226,7 @@ class GPT(nn.Module):
 ######################################################################################################################
 
 class WordacyDataset:
-    def __init__(self, words, block_size, batch_size, vocab_str, device):
+    def __init__(self, words, block_size, batch_size, vocab_str):
         """
         block_size : maximum sequence length
         batch_size : amount words in one batch
@@ -247,7 +247,6 @@ class WordacyDataset:
 
         self.block_size = block_size
         self.batch_size = batch_size
-        self.device = device
         self.batches = [
             words[i: i + self.batch_size]
             for i in range(0, len(words), self.batch_size)
@@ -266,11 +265,14 @@ class WordacyDataset:
     def size(self):
         return len(self.batches)
 
-    def get_batch(self, idx):
+    # implementation is custom_collate_fn(..) by rasbt, 
+    def get_batch(self, idx, device):
         if idx >= len(self.batches) or (len(self.batches) == 0):
             return None, None
 
         batch_words = self.batches[idx]
+        # Find the longest sequence in the batch
+        batch_max_length = max(len(item)+1 for item in batch_words)
 
         inputs_lst = []
         targets_lst = []
@@ -280,7 +282,7 @@ class WordacyDataset:
             new_item = self.encode(w) + [self.eos_token_id]
 
             # Pad sequences to max_length
-            padded = new_item + [pad_token_id] * (self.block_size - len(new_item))
+            padded = new_item + [pad_token_id] * (batch_max_length - len(new_item))
 
             inputs = torch.tensor(padded[:-1])  # Truncate the last token for inputs
             targets = torch.tensor(padded[1:])  # Shift +1 to the right for targets
@@ -295,25 +297,20 @@ class WordacyDataset:
             inputs_lst.append(inputs)
             targets_lst.append(targets)
 
-        x = torch.tensor(inputs_lst, dtype=torch.long, device=self.device)
-        y = torch.tensor(targets_lst, dtype=torch.long, device=self.device)
-        return x, y
+        # Convert list of inputs and targets to tensors and transfer to target device
+        inputs_tensor = torch.stack(inputs_lst).to(device)
+        targets_tensor = torch.stack(targets_lst).to(device)
+        return inputs_tensor, targets_tensor
 
 
 if __name__ == "__main__":
-
-    ###############################################
-    # itos = {0: "<PAD>"}
-    # stoi = {"<PAD>": 0}
-    # itos = {0: "<PAD>"}
-    # stoi = {"<PAD>": 0}
 
     train_words = [
         "ai", "machine", "learning", "large", "language", "model", "train", "transformer",
         "builds", "gpt-2", "fine", "tuning", "steps", "wordacy", "spelling", "correction",
         ]
 
-    train_ds = WordacyDataset(train_words, block_size=32, batch_size=4, vocab_str=vocab, device=device)
+    train_ds = WordacyDataset(train_words, block_size=32, batch_size=4, vocab_str=vocab)
 
     model = GPT(GPTConfig())
     model.to(device)
@@ -326,9 +323,7 @@ if __name__ == "__main__":
     for epoch in range(max_epochs):
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.get_batch(id)
-            xb = xb.to(device)
-            yb = yb.to(device)
+            xb, yb = train_ds.get_batch(id, device)
 
             # evaluate the loss
             logits, loss = model(xb, yb)
