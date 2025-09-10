@@ -8,6 +8,7 @@ from transformers import GPT2LMHeadModel
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+vocab = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~"
 
 @dataclass
 class GPTConfig:
@@ -15,6 +16,7 @@ class GPTConfig:
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
+    vocab_size: int = len(vocab)
 
 
 class CausalSelfAttention(nn.Module):
@@ -142,7 +144,8 @@ class GPT(nn.Module):
         logits = self.lm_head(x) # (B, T, vocab_size)
         loss = None
         if targets is not None:
-            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1))
+            # F.cross_entropy(ignore_index=-100) for SFT-mode
+            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-100)
         return logits, loss
 
 
@@ -223,21 +226,19 @@ class GPT(nn.Module):
 ######################################################################################################################
 
 class WordacyDataset:
-    def __init__(self, words, block_size, batch_size, device):
+    def __init__(self, words, block_size, batch_size, vocab_str, device):
         """
         block_size : maximum sequence length
         batch_size : amount words in one batch
         stoi       : symbol -> index
         device     : 'cuda' or 'cpu'
         """
-        text = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~"
+        chars = sorted(list(set(vocab_str)))
 
-        chars = sorted(list(set(text)))
         self.vocab_size = len(chars)
         self.stoi = {}
         self.itos = {}
         for i, ch in enumerate(chars, start=0):
-        #for i, ch in enumerate(chars, start=1):
             self.stoi[ch] = i
             self.itos[i] = ch
 
@@ -251,7 +252,6 @@ class WordacyDataset:
             words[i: i + self.batch_size]
             for i in range(0, len(words), self.batch_size)
         ]
-        self.reset()
 
     def encode(self, word):
         return [self.stoi[c] for c in word]
@@ -263,32 +263,40 @@ class WordacyDataset:
                 tokens = tokens.tolist()
             return "".join([self.itos[i] for i in tokens if i != 0])
 
-    def reset(self):
-        self.idx = -1
+    def size(self):
+        return len(self.batches)
 
-    def next_batch(self):
-        if self.idx >= len(self.batches) or (len(self.batches) == 0):
-            self.reset()
-            return None
+    def get_batch(self, idx):
+        if idx >= len(self.batches) or (len(self.batches) == 0):
+            return None, None
 
-        self.idx += 1
-        batch_words = self.batches[self.idx]
+        batch_words = self.batches[idx]
 
-        x_list = []
-        y_list = []
+        inputs_lst = []
+        targets_lst = []
+        pad_token_id = self.eos_token_id
 
         for w in batch_words:
-            tokens = self.encode(w)
-            if len(tokens) > self.block_size:
-                tokens = tokens[:self.block_size]
-            else:
-                tokens = tokens + [self.eos_token_id] * (self.block_size - len(tokens))
+            new_item = self.encode(w) + [self.eos_token_id]
 
-            x_list.append(tokens[:-1])
-            y_list.append(tokens[1:])
+            # Pad sequences to max_length
+            padded = new_item + [pad_token_id] * (self.block_size - len(new_item))
 
-        x = torch.tensor(x_list, dtype=torch.long, device=self.device)
-        y = torch.tensor(y_list, dtype=torch.long, device=self.device)
+            inputs = torch.tensor(padded[:-1])  # Truncate the last token for inputs
+            targets = torch.tensor(padded[1:])  # Shift +1 to the right for targets
+
+            # New: Replace all but the first padding tokens in targets by ignore_index
+            mask = targets == pad_token_id
+            # Removes dimensions of size 1.
+            indices = torch.nonzero(mask).squeeze()
+            if indices.numel() > 1:
+                targets[indices[1:]] = -100
+
+            inputs_lst.append(inputs)
+            targets_lst.append(targets)
+
+        x = torch.tensor(inputs_lst, dtype=torch.long, device=self.device)
+        y = torch.tensor(targets_lst, dtype=torch.long, device=self.device)
         return x, y
 
 
@@ -305,13 +313,30 @@ if __name__ == "__main__":
         "builds", "gpt-2", "fine", "tuning", "steps", "wordacy", "spelling", "correction",
         ]
 
-    train_gen = WordacyDataset(train_words, block_size=32, batch_size=4, device=device)
+    train_ds = WordacyDataset(train_words, block_size=32, batch_size=4, vocab_str=vocab, device=device)
 
+    model = GPT(GPTConfig())
+    model.to(device)
 
-    epochs = 10
-    for i in range(epochs):
-        while True:
-            x, y = train_gen.next_batch()
-            if x is None:
-                break
+    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
+
+    max_epochs = 10
+    max_batches = train_ds.size()
+
+    for epoch in range(max_epochs):
+        losses = torch.zeros(max_batches)
+        for id in range(max_batches):
+            xb, yb = train_ds.get_batch(id)
+            xb = xb.to(device)
+            yb = yb.to(device)
+
+            # evaluate the loss
+            logits, loss = model(xb, yb)
+            losses[id] = loss.item()
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+
+        # mean loss per epoch
+        print(f"Epoch {epoch+1}, epoch avg loss: {losses.mean().item():.4f}")
 
