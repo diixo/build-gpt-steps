@@ -6,6 +6,9 @@ from dataclasses import dataclass
 from transformers import GPT2LMHeadModel
 
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 @dataclass
 class GPTConfig:
     block_size: int = 64    # max sequence length
@@ -216,4 +219,96 @@ class GPT(nn.Module):
             print(f"using fused AdamW: {use_fused}")
         optimizer = torch.optim.AdamW(optim_groups, lr=learning_rate, betas=(0.9, 0.95), eps=1e-8, fused=use_fused)
         return optimizer
+
+######################################################################################################################
+
+class WordacyDataset:
+    def __init__(self, words, block_size, batch_size, device):
+        """
+        block_size : maximum sequence length
+        batch_size : amount words in one batch
+        stoi       : symbol -> index
+        device     : 'cuda' or 'cpu'
+        """
+        text = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + "~"
+
+        chars = sorted(list(set(text)))
+        #vocab_size = len(chars)
+        self.stoi = {}
+        self.itos = {}
+        for i, ch in enumerate(chars, start=0):
+        #for i, ch in enumerate(chars, start=1):
+            self.stoi[ch] = i
+            self.itos[i] = ch
+
+        self.block_size = block_size
+        self.batch_size = batch_size
+        self.device = device
+        self.batches = [
+            words[i:i + self.batch_size]
+            for i in range(0, len(words), self.batch_size)
+        ]
+        self.reset()
+
+    def encode(self, word):
+        return [self.stoi[c] for c in word]
+
+    def decode(self, tokens):
+            # tokens: list or tensor indices
+            # remove padding (0)
+            if isinstance(tokens, torch.Tensor):
+                tokens = tokens.tolist()
+            return "".join([self.itos[i] for i in tokens if i != 0])
+
+    def reset(self):
+        self.idx = -1
+
+    def get_batch(self):
+        if self.idx >= len(self.batches) or (len(self.batches) == 0):
+            self.reset()
+            return None
+
+        self.idx += 1
+        batch_words = self.batches[self.idx]
+
+        x_list = []
+        y_list = []
+
+        for w in batch_words:
+            tokens = self.encode(w)
+            if len(tokens) > self.block_size:
+                tokens = tokens[:self.block_size]
+            else:
+                tokens = tokens + [0] * (self.block_size - len(tokens))
+
+            x_list.append(tokens[:-1])
+            y_list.append(tokens[1:])
+
+        x = torch.tensor(x_list, dtype=torch.long, device=self.device)
+        y = torch.tensor(y_list, dtype=torch.long, device=self.device)
+        return x, y
+
+
+if __name__ == "__main__":
+
+    ###############################################
+    # itos = {0: "<PAD>"}
+    # stoi = {"<PAD>": 0}
+    # itos = {0: "<PAD>"}
+    # stoi = {"<PAD>": 0}
+
+    train_words = [
+        "ai", "machine", "learning", "large", "language", "model", "train", "transformer",
+        "builds", "gpt-2", "fine", "tuning", "steps", "wordacy", "spelling", "correction",
+        ]
+
+    train_gen = WordacyDataset(train_words, block_size=32, batch_size=4)
+
+
+    epochs = 10
+    for i in enumerate(epochs):
+        while True:
+            x, y = train_gen.get_batch()
+            if x is None:
+                break
 
