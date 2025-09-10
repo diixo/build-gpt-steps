@@ -230,10 +230,10 @@ class WordacyDataset:
         stoi       : symbol -> index
         device     : 'cuda' or 'cpu'
         """
-        text = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + "~"
+        text = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~"
 
         chars = sorted(list(set(text)))
-        #vocab_size = len(chars)
+        self.vocab_size = len(chars)
         self.stoi = {}
         self.itos = {}
         for i, ch in enumerate(chars, start=0):
@@ -241,11 +241,14 @@ class WordacyDataset:
             self.stoi[ch] = i
             self.itos[i] = ch
 
+        self.eos_ch = '~'
+        self.eos_token_id = self.stoi[self.eos_ch]
+
         self.block_size = block_size
         self.batch_size = batch_size
         self.device = device
         self.batches = [
-            words[i:i + self.batch_size]
+            words[i: i + self.batch_size]
             for i in range(0, len(words), self.batch_size)
         ]
         self.reset()
@@ -263,7 +266,7 @@ class WordacyDataset:
     def reset(self):
         self.idx = -1
 
-    def get_batch(self):
+    def next_batch(self):
         if self.idx >= len(self.batches) or (len(self.batches) == 0):
             self.reset()
             return None
@@ -279,7 +282,7 @@ class WordacyDataset:
             if len(tokens) > self.block_size:
                 tokens = tokens[:self.block_size]
             else:
-                tokens = tokens + [0] * (self.block_size - len(tokens))
+                tokens = tokens + [self.eos_token_id] * (self.block_size - len(tokens))
 
             x_list.append(tokens[:-1])
             y_list.append(tokens[1:])
@@ -302,13 +305,13 @@ if __name__ == "__main__":
         "builds", "gpt-2", "fine", "tuning", "steps", "wordacy", "spelling", "correction",
         ]
 
-    train_gen = WordacyDataset(train_words, block_size=32, batch_size=4)
+    train_gen = WordacyDataset(train_words, block_size=32, batch_size=4, device=device)
 
 
     epochs = 10
-    for i in enumerate(epochs):
+    for i in range(epochs):
         while True:
-            x, y = train_gen.get_batch()
+            x, y = train_gen.next_batch()
             if x is None:
                 break
 
