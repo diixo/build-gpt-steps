@@ -4,19 +4,21 @@ import torch.nn as nn
 from torch.nn import functional as F
 from dataclasses import dataclass
 from transformers import GPT2LMHeadModel
+from gpt_utils import generate_text
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-vocab = "#+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~"
+vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?~"
+
 
 @dataclass
 class GPTConfig:
-    block_size: int = 64    # max sequence length
+    block_size: int = 32    # context length (word chars sequence)
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
-    vocab_size: int = len(vocab)
+    vocab_size: int = len(vocab_str)
 
 
 class CausalSelfAttention(nn.Module):
@@ -32,6 +34,7 @@ class CausalSelfAttention(nn.Module):
         # regularization
         self.n_head = config.n_head
         self.n_embd = config.n_embd
+
 
     def forward(self, x):
         B, T, C = x.size() # batch size, sequence length, embedding dimensionality (n_embd)
@@ -64,6 +67,7 @@ class MLP(nn.Module):
         x = self.c_proj(x)
         return x
 
+
 class Block(nn.Module):
     # head_layer+1 ​= head_layer + Attn(LN(head_layer)) + MLP(LN(head_layer))
 
@@ -77,21 +81,6 @@ class Block(nn.Module):
     def forward(self, x):
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
-        return x
-
-
-class BlockPA(nn.Module):   # Block Parallel Attention
-    # head_layer+1 ​= head_layer ​+ MLP( LN(head_layer ​+ Attn(LN(head_layer))) )
-
-    def __init__(self, config):
-        super().__init__()
-        self.ln_attn = nn.LayerNorm(config.n_embd)
-        self.ln_mlp = nn.LayerNorm(config.n_embd)
-        self.attn = CausalSelfAttention(config)
-        self.mlp = MLP(config)
-
-    def forward(self, x):
-        x = x + self.attn(self.ln_attn(x)) + self.mlp(self.ln_mlp(x))
         return x
 
 
@@ -225,10 +214,20 @@ class GPT(nn.Module):
 
 ######################################################################################################################
 
+def load_txt(file_path: str) -> list:
+    items = []
+    with open(file_path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            items.append(line)
+    return items
+
 class WordacyDataset:
-    def __init__(self, words, block_size, batch_size, vocab_str):
+    def __init__(self, words, context_size, batch_size, vocab_str):
         """
-        block_size : maximum sequence length
+        context_size : context sequence length
         batch_size : amount words in one batch
         stoi       : symbol -> index
         device     : 'cuda' or 'cpu'
@@ -245,7 +244,7 @@ class WordacyDataset:
         self.eos_ch = '~'
         self.eos_token_id = self.stoi[self.eos_ch]
 
-        self.block_size = block_size
+        self.context_size = context_size
         self.batch_size = batch_size
         self.batches = [
             words[i: i + self.batch_size]
@@ -256,11 +255,11 @@ class WordacyDataset:
         return [self.stoi[c] for c in word]
 
     def decode(self, tokens):
-            # tokens: list or tensor indices
-            # remove padding (0)
-            if isinstance(tokens, torch.Tensor):
-                tokens = tokens.tolist()
-            return "".join([self.itos[i] for i in tokens if i != 0])
+        # tokens: list or tensor indices
+        # remove padding (0)
+        if isinstance(tokens, torch.Tensor):
+            tokens = tokens.tolist()
+        return "".join([self.itos[i] for i in tokens if i != self.eos_token_id])
 
     def size(self):
         return len(self.batches)
@@ -271,8 +270,11 @@ class WordacyDataset:
             return None, None
 
         batch_words = self.batches[idx]
-        # Find the longest sequence in the batch
-        batch_max_length = max(len(item)+1 for item in batch_words)
+        
+        batch_max_length = min(
+            max(len(item)+1 for item in batch_words),   # Find the longest sequence in the batch
+            self.context_size                           # split by context length
+        )
 
         inputs_lst = []
         targets_lst = []
@@ -305,20 +307,19 @@ class WordacyDataset:
 
 if __name__ == "__main__":
 
-    train_words = [
-        "ai", "machine", "learning", "large", "language", "model", "train", "transformer",
-        "builds", "gpt-2", "fine", "tuning", "steps", "wordacy", "spelling", "correction",
-        ]
+    train_words = load_txt("datasets/db-full.txt")
 
-    train_ds = WordacyDataset(train_words, block_size=32, batch_size=4, vocab_str=vocab)
+    config = GPTConfig()
+    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=64, vocab_str=vocab_str)
 
-    model = GPT(GPTConfig())
+    model = GPT(config)
     model.to(device)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4)
 
-    max_epochs = 10
+    max_epochs = 20
     max_batches = train_ds.size()
+    print(f"dataset.size={len(train_words)}, vocab_size={train_ds.vocab_size}, batches={max_batches}")
 
     for epoch in range(max_epochs):
         losses = torch.zeros(max_batches)
@@ -333,5 +334,18 @@ if __name__ == "__main__":
             optimizer.step()
 
         # mean loss per epoch
-        print(f"Epoch {epoch+1}, epoch avg loss: {losses.mean().item():.4f}")
+        print(f"...epoch: {epoch+1}, avg loss: {losses.mean().item():.4f}")
 
+
+    wrong_word = "successfuly"
+    corrected = generate_text(
+        wrong_word,
+        model,
+        train_ds,   # as encoder
+        device,
+        device_type = str(device.type),
+        ddp_rank=0,
+        max_length=config.block_size
+        )
+
+    print(wrong_word, corrected)
