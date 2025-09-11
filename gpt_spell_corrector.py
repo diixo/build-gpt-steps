@@ -22,6 +22,7 @@ class GPTConfig:
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
     vocab_size: int = len(vocab_str)
+    vocab_str: str = vocab_str
 
 
 class CausalSelfAttention(nn.Module):
@@ -375,7 +376,7 @@ if __name__ == "__main__":
     train_words = load_txt("datasets/db-full.txt")
 
     config = GPTConfig()
-    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=64, vocab_str=vocab_str)
+    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=1, vocab_str=vocab_str)
 
     print(f"items: {len(train_words)}, batches: {train_ds.size()}, vocab_size: {train_ds.vocab_size}")
 
@@ -389,7 +390,7 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            max_epochs=100
+            max_epochs=100,
         )
         torch.save(model.state_dict(), model_path)
 
