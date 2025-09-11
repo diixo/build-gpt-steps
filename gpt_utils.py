@@ -12,7 +12,7 @@ def generate_new_text(prompt: str, model, enc, device, device_type, max_length=3
 
     # forward the model to get the logits
     with torch.no_grad():
-        for _ in range(max_length):
+        while xgen.size(1) < max_length:
             with torch.autocast(device_type=device_type, dtype=torch.bfloat16):
                 logits, loss = model(xgen) # (B, T, vocab_size)
             # take the logits at the last position
