@@ -5,18 +5,19 @@ import torch.nn as nn
 from torch.nn import functional as F
 from dataclasses import dataclass
 from transformers import GPT2LMHeadModel
-from gpt_utils import generate_new_text
+from gpt_utils import generate_new_text, generate_new_text_sft
+from tqdm import tqdm
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?~"
+vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ~"
 
 model_path = "model.pt"
 
 @dataclass
 class GPTConfig:
-    block_size: int = 32    # context length (word chars sequence)
+    block_size: int = 64    # context length (word chars sequence)
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
@@ -245,6 +246,7 @@ class WordacyDataset:
 
         self.eos_ch = '~'
         self.eos_token_id = self.stoi[self.eos_ch]
+        self.sep_token_id = 0   # separator symbol=" " has 0-index into stoi.
 
         self.context_size = context_size
         self.batch_size = batch_size
@@ -307,26 +309,65 @@ class WordacyDataset:
         return inputs_tensor, targets_tensor
 
 
+    def get_batch_sft(self, idx, device):
+        if idx >= len(self.batches) or (len(self.batches) == 0):
+            return None, None
+
+        batch_words = self.batches[idx]
+
+        input_ids_list, labels_list = [], []
+        max_len = 0
+
+        # Токенизация и маскирование
+        for w in batch_words:
+            question_ids = self.encode(w) + [self.sep_token_id]
+            answer_ids = self.encode(w) + [self.eos_token_id]
+            # добавляю в конец принудительно endoftext, он не будет маскироваться на -100, потомучто является частью ответа
+
+            input_ids = question_ids + answer_ids
+            labels = [-100] * len(question_ids) + answer_ids  # маскируем вопрос
+
+            input_ids_list.append(input_ids)
+            labels_list.append(labels)
+            max_len = max(max_len, len(input_ids))
+
+        # Padding
+        padded_inputs = []
+        padded_labels = []
+        for inp, lbl in zip(input_ids_list, labels_list):
+            padded_inputs.append(torch.tensor(inp + [self.eos_token_id] * (max_len - len(inp)), dtype=torch.long))
+            padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl)), dtype=torch.long))
+
+        inputs_tensor = torch.stack(padded_inputs).to(device)
+        labels_tensor = torch.stack(padded_labels).to(device)
+        return inputs_tensor, labels_tensor
+
+
 def train(model: GPT, train_ds: WordacyDataset, max_epochs = 20):
+
+    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
 
     max_batches = train_ds.size()
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4)
+    progress = tqdm(range(max_epochs), desc="Training", position=0)
 
-    for epoch in range(max_epochs):
+    for epoch in progress:
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.get_batch(id, device)
+            xb, yb = train_ds.get_batch_sft(id, device)
 
             # evaluate the loss
             logits, loss = model(xb, yb)
             losses[id] = loss.item()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
+
             optimizer.step()
 
         # mean loss per epoch
-        print(f"...epoch: {epoch+1}, avg loss: {losses.mean().item():.4f}")
+        avg_loss = losses.mean().item()
+        progress.set_postfix(avg_loss=f"{avg_loss:.4f}")
+        #print(f"...epoch: {epoch+1}, avg loss: {avg_loss:.4f}")
 
 
 if __name__ == "__main__":
@@ -354,13 +395,13 @@ if __name__ == "__main__":
 
     word_test = "successfuly"
 
-    corrected = generate_new_text(
+    corrected = generate_new_text_sft(
         word_test,
         model,
         train_ds,   # as encoder
         device,
         device_type = str(device.type),
-        max_length=config.block_size
+        max_new_length = 16
         )
 
     print(f"### input: {word_test}\n### corrected: {corrected}")
