@@ -229,7 +229,7 @@ def load_txt(file_path: str) -> list:
     return items
 
 class WordacyDataset:
-    def __init__(self, words, context_size, batch_size, vocab_str):
+    def __init__(self, words, context_size, vocab_str, batch_size):
         """
         context_size : context sequence length
         batch_size : amount words in one batch
@@ -376,23 +376,39 @@ if __name__ == "__main__":
     train_words = load_txt("datasets/db-full.txt")
 
     config = GPTConfig()
-    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=1, vocab_str=vocab_str)
-
-    print(f"items: {len(train_words)}, batches: {train_ds.size()}, vocab_size: {train_ds.vocab_size}")
-
-    model = GPT(config)
-    model.to(device)
+    train_ds = None
+    model = None
 
     if os.path.exists(model_path):
-        state_dict = torch.load(model_path, map_location=device, weights_only=True)
+        checkpoint = torch.load(model_path, map_location=device, weights_only=True)
+
+        config = GPTConfig(**checkpoint["config"])
+        state_dict = checkpoint["state_dict"]
+
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
+        print(f"::loaded, dataset: items={len(train_words)}, batches={train_ds.size()}, words={train_ds.vocab_size}")
+
+        model = GPT(config)
+        model.to(device)
         model.load_state_dict(state_dict)
     else:
+
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
+        print(f"::create, dataset: items={len(train_words)}, batches={train_ds.size()}, words={train_ds.vocab_size}")
+
+        model = GPT(config)
+        model.to(device)
+
         train(
             model,
             train_ds,
-            max_epochs=100,
+            max_epochs=20,
         )
-        torch.save(model.state_dict(), model_path)
+        torch.save({
+            "state_dict": model.state_dict(),
+            "config": config.__dict__,
+        }, model_path)
+    ####################################################################################################################
 
     word_test = "successfuly"
 
