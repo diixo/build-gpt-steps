@@ -17,7 +17,7 @@ model_path = "model.pt"
 
 @dataclass
 class GPTConfig:
-    block_size: int = 64    # context length (word chars sequence)
+    block_size: int = 32    # context length (word chars sequence)
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
@@ -354,7 +354,7 @@ def train(model: GPT, train_ds: WordacyDataset, max_epochs = 20):
     for epoch in progress:
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.get_batch_sft(id, device)
+            xb, yb = train_ds.get_batch(id, device)
 
             # evaluate the loss
             logits, loss = model(xb, yb)
@@ -389,19 +389,19 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            max_epochs=20
+            max_epochs=100
         )
         torch.save(model.state_dict(), model_path)
 
     word_test = "successfuly"
 
-    corrected = generate_new_text_sft(
+    corrected = generate_new_text(
         word_test,
         model,
         train_ds,   # as encoder
         device,
         device_type = str(device.type),
-        max_new_length = 16
+        max_length = config.block_size-1
         )
 
     print(f"### input: {word_test}\n### corrected: {corrected}")
