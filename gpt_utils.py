@@ -3,7 +3,7 @@ import torch
 from torch.nn import functional as F
 
 
-def generate_new_text(prompt: str, model, enc, device, device_type, max_new_length=20):
+def generate_new_text(prompt: str, model, enc, device, device_type, max_length=30):
     model.eval()
 
     inputs = enc.encode(prompt) + [enc.eos_token_id]
@@ -12,7 +12,7 @@ def generate_new_text(prompt: str, model, enc, device, device_type, max_new_leng
 
     # forward the model to get the logits
     with torch.no_grad():
-        for _ in range(max_new_length):
+        for _ in range(max_length):
             with torch.autocast(device_type=device_type, dtype=torch.bfloat16):
                 logits, loss = model(xgen) # (B, T, vocab_size)
             # take the logits at the last position
@@ -24,8 +24,8 @@ def generate_new_text(prompt: str, model, enc, device, device_type, max_new_leng
             # append to the sequence
             xgen = torch.cat((xgen, xcol), dim=1)
     # return generated text
-    decoded = xgen[0, :len(inputs)].tolist()
-    return enc.decode(decoded[len(inputs):])
+    decoded = xgen[0, :max_length].tolist()
+    return enc.decode(decoded)
 
 
 def generate_new_text_sft(prompt: str, model, enc, device, device_type, max_new_length=20):
