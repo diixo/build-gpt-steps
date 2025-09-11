@@ -1,16 +1,18 @@
+import os
 import inspect
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
 from dataclasses import dataclass
 from transformers import GPT2LMHeadModel
-from gpt_utils import generate_text
+from gpt_utils import generate_new_text
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?~"
 
+model_path = "model.pt"
 
 @dataclass
 class GPTConfig:
@@ -305,21 +307,11 @@ class WordacyDataset:
         return inputs_tensor, targets_tensor
 
 
-if __name__ == "__main__":
+def train(model: GPT, train_ds: WordacyDataset, max_epochs = 20):
 
-    train_words = load_txt("datasets/db-full.txt")
-
-    config = GPTConfig()
-    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=64, vocab_str=vocab_str)
-
-    model = GPT(config)
-    model.to(device)
+    max_batches = train_ds.size()
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4)
-
-    max_epochs = 20
-    max_batches = train_ds.size()
-    print(f"dataset.size={len(train_words)}, vocab_size={train_ds.vocab_size}, batches={max_batches}")
 
     for epoch in range(max_epochs):
         losses = torch.zeros(max_batches)
@@ -337,15 +329,38 @@ if __name__ == "__main__":
         print(f"...epoch: {epoch+1}, avg loss: {losses.mean().item():.4f}")
 
 
-    wrong_word = "successfuly"
-    corrected = generate_text(
-        wrong_word,
+if __name__ == "__main__":
+
+    train_words = load_txt("datasets/db-full.txt")
+
+    config = GPTConfig()
+    train_ds = WordacyDataset(train_words, context_size=config.block_size, batch_size=64, vocab_str=vocab_str)
+
+    print(f"items: {len(train_words)}, batches: {train_ds.size()}, vocab_size: {train_ds.vocab_size}")
+
+    model = GPT(config)
+    model.to(device)
+
+    if os.path.exists(model_path):
+        state_dict = torch.load(model_path, map_location=device, weights_only=True)
+        model.load_state_dict(state_dict)
+    else:
+        train(
+            model,
+            train_ds,
+            max_epochs=20
+        )
+        torch.save(model.state_dict(), model_path)
+
+    word_test = "successfuly"
+
+    corrected = generate_new_text(
+        word_test,
         model,
         train_ds,   # as encoder
         device,
         device_type = str(device.type),
-        ddp_rank=0,
         max_length=config.block_size
         )
 
-    print(wrong_word, corrected)
+    print(f"### input: {word_test}\n### corrected: {corrected}")
