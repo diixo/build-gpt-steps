@@ -17,7 +17,7 @@ model_path = "model.pt"
 
 @dataclass
 class GPTConfig:
-    block_size: int = 48    # context length (word chars sequence)
+    block_size: int = 64    # context length (word chars sequence)
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
@@ -269,15 +269,15 @@ class WordacyDataset:
     def size(self):
         return len(self.batches)
 
-    # implementation is custom_collate_fn(..) by rasbt, 
+    # implementation is custom_collate_fn(..) by rasbt
     def get_batch(self, idx, device):
         if idx >= len(self.batches) or (len(self.batches) == 0):
             return None, None
 
-        batch_words = self.batches[idx]
+        word_pairs = self.batches[idx]
         
         batch_max_length = min(
-            max(len(item)+1 for item in batch_words),   # Find the longest sequence in the batch
+            max(len(item)+1 for item in word_pairs),   # Find the longest sequence in the batch
             self.context_size                           # split by context length
         )
 
@@ -285,7 +285,7 @@ class WordacyDataset:
         targets_lst = []
         pad_token_id = self.eos_token_id
 
-        for w in batch_words:
+        for w in word_pairs:
             new_item = self.encode(w) + [self.eos_token_id]
 
             # Pad sequences to max_length
@@ -314,30 +314,31 @@ class WordacyDataset:
         if idx >= len(self.batches) or (len(self.batches) == 0):
             return None, None
 
-        batch_words = self.batches[idx]
+        batch_words = self.batches[idx]  # список слов
         input_ids_list, labels_list = [], []
         max_len = 0
 
         for w in batch_words:
-            input_ids  = self.encode(w) + [self.sep_token_id]   # input: слово + SEP
-            target_ids = self.encode(w) + [self.eos_token_id]   # target: слово + EOS
-            labels = [-100] * len(input_ids) + target_ids       # маскируем input
+            # input = слово как есть (может быть неправильное)
+            input_ids = self.encode(w)
+            # target = правильное написание
+            target_ids = self.encode(w) + [self.eos_token_id]
 
+            labels = target_ids.copy()  # считаем loss на всём target
+            # на входе нет лишних токенов
             input_ids_list.append(input_ids)
             labels_list.append(labels)
-            max_len = max(max_len, len(labels)) # max_len учитывает длину labels
+            max_len = max(max_len, len(labels))
 
-        # --- Padding до max_len ---
+        # Padding
         padded_inputs = []
         padded_labels = []
+        pad_id = self.sep_token_id
         for inp, lbl in zip(input_ids_list, labels_list):
-            padded_inputs.append(torch.tensor(inp + [self.eos_token_id] * (max_len - len(inp)), dtype=torch.long))
-            padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl)), dtype=torch.long))
+            padded_inputs.append(torch.tensor(inp + [pad_id]*(max_len - len(inp)), dtype=torch.long))
+            padded_labels.append(torch.tensor(lbl + [-100]*(max_len - len(lbl)), dtype=torch.long))
 
-        inputs_tensor = torch.stack(padded_inputs).to(device)
-        labels_tensor = torch.stack(padded_labels).to(device)
-
-        return inputs_tensor, labels_tensor
+        return torch.stack(padded_inputs).to(device), torch.stack(padded_labels).to(device)
 
 
 def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
@@ -370,7 +371,19 @@ if __name__ == "__main__":
 
     train_words = load_txt("datasets/dictionary-8k.txt")
 
-    train_words = ["machine", "learning", "hello", "world", "model", "language", "deep", "neural", "network", "transform",]
+    train_words = [
+        ("machine", "machine"),
+        ("learning", "learning"),
+        ("hello", "hello"),
+        ("world", "world"),
+        ("model", "model"),
+        ("language", "language"),
+        ("deep", "deep"),
+        ("neural","neural"),
+        ("network", "network"),
+        ("transform","transform"),
+        ("wrng","wrong"),
+        ]
 
     config = GPTConfig()
     train_ds = None
@@ -399,8 +412,8 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            learning_rate=5e-5,
-            max_epochs=250
+            learning_rate=3e-5,
+            max_epochs=100,
         )
 
         # torch.save({
