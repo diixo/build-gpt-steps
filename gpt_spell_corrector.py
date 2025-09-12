@@ -315,24 +315,19 @@ class WordacyDataset:
             return None, None
 
         batch_words = self.batches[idx]
-
         input_ids_list, labels_list = [], []
         max_len = 0
 
-        # Токенизация и маскирование
         for w in batch_words:
-            question_ids = self.encode(w) + [self.sep_token_id]
-            answer_ids = self.encode(w) + [self.eos_token_id]
-            # добавляю в конец принудительно endoftext, он не будет маскироваться на -100, потомучто является частью ответа
-
-            input_ids = question_ids + answer_ids
-            labels = [-100] * len(question_ids) + answer_ids  # маскируем вопрос
+            input_ids  = self.encode(w) + [self.sep_token_id]   # input: слово + SEP
+            target_ids = self.encode(w) + [self.eos_token_id]   # target: слово + EOS
+            labels = [-100] * len(input_ids) + target_ids       # маскируем input
 
             input_ids_list.append(input_ids)
             labels_list.append(labels)
-            max_len = max(max_len, len(input_ids))
+            max_len = max(max_len, len(labels)) # max_len учитывает длину labels
 
-        # Padding
+        # --- Padding до max_len ---
         padded_inputs = []
         padded_labels = []
         for inp, lbl in zip(input_ids_list, labels_list):
@@ -341,6 +336,7 @@ class WordacyDataset:
 
         inputs_tensor = torch.stack(padded_inputs).to(device)
         labels_tensor = torch.stack(padded_labels).to(device)
+
         return inputs_tensor, labels_tensor
 
 
@@ -372,7 +368,9 @@ def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
 
 if __name__ == "__main__":
 
-    train_words = load_txt("datasets/dictionary.txt")
+    train_words = load_txt("datasets/dictionary-8k.txt")
+
+    train_words = ["machine", "learning", "hello", "world", "model", "language", "deep", "neural", "network", "transform",]
 
     config = GPTConfig()
     train_ds = None
@@ -401,16 +399,17 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            1e-5,
-            max_epochs=50,
+            learning_rate=5e-5,
+            max_epochs=250
         )
-        torch.save({
-            "state_dict": model.state_dict(),
-            "config": config.__dict__,
-        }, model_path)
+
+        # torch.save({
+        #     "state_dict": model.state_dict(),
+        #     "config": config.__dict__,
+        # }, model_path)
     ####################################################################################################################
 
-    word_test = "rasterize"
+    word_test = "transform"
 
     corrected = generate_new_text_sft(
         word_test,
