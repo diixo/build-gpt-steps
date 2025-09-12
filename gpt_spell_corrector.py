@@ -400,7 +400,7 @@ def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
 
 if __name__ == "__main__":
 
-    test_words = [
+    train_words = [
         ("wrng","wrong"),
         ("machine", "machine"),
         ("learning", "learning"),
@@ -419,7 +419,7 @@ if __name__ == "__main__":
         ("ittention", "attention"),
         ]
 
-    train_words = load_txt("datasets/dictionary-8k.txt") + test_words
+    train_words += load_txt("datasets/dictionary-8k.txt")
 
     config = GPTConfig()
     train_ds = None
@@ -449,7 +449,7 @@ if __name__ == "__main__":
             model,
             train_ds,
             learning_rate=1e-4,
-            max_epochs=200,
+            max_epochs=50,
         )
 
         torch.save({
