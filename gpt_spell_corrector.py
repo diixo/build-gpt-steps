@@ -17,7 +17,7 @@ model_path = "model.pt"
 
 @dataclass
 class GPTConfig:
-    block_size: int = 32    # context length (word chars sequence)
+    block_size: int = 48    # context length (word chars sequence)
     n_layer: int = 4        # number of layers
     n_head: int = 4         # number of heads
     n_embd: int = 128       # embedding dimension
@@ -344,9 +344,9 @@ class WordacyDataset:
         return inputs_tensor, labels_tensor
 
 
-def train(model: GPT, train_ds: WordacyDataset, max_epochs = 20):
+def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
     max_batches = train_ds.size()
 
@@ -355,25 +355,24 @@ def train(model: GPT, train_ds: WordacyDataset, max_epochs = 20):
     for epoch in progress:
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.get_batch(id, device)
+            xb, yb = train_ds.get_batch_sft(id, device)
 
             # evaluate the loss
             logits, loss = model(xb, yb)
-            losses[id] = loss.item()
+
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
-
             optimizer.step()
+            losses[id] = loss.item()
 
         # mean loss per epoch
         avg_loss = losses.mean().item()
         progress.set_postfix(avg_loss=f"{avg_loss:.4f}")
-        #print(f"...epoch: {epoch+1}, avg loss: {avg_loss:.4f}")
 
 
 if __name__ == "__main__":
 
-    train_words = load_txt("datasets/db-full.txt")
+    train_words = load_txt("datasets/dictionary.txt")
 
     config = GPTConfig()
     train_ds = None
@@ -386,7 +385,7 @@ if __name__ == "__main__":
         state_dict = checkpoint["state_dict"]
 
         train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
-        print(f"::loaded, dataset: items={len(train_words)}, batches={train_ds.size()}, words={train_ds.vocab_size}")
+        print(f"::loaded, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
         model.to(device)
@@ -394,7 +393,7 @@ if __name__ == "__main__":
     else:
 
         train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
-        print(f"::create, dataset: items={len(train_words)}, batches={train_ds.size()}, words={train_ds.vocab_size}")
+        print(f"::create, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
         model.to(device)
@@ -402,7 +401,8 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            max_epochs=20,
+            1e-5,
+            max_epochs=50,
         )
         torch.save({
             "state_dict": model.state_dict(),
@@ -410,15 +410,15 @@ if __name__ == "__main__":
         }, model_path)
     ####################################################################################################################
 
-    word_test = "successfuly"
+    word_test = "rasterize"
 
-    corrected = generate_new_text(
+    corrected = generate_new_text_sft(
         word_test,
         model,
         train_ds,   # as encoder
         device,
         device_type = str(device.type),
-        max_length = config.block_size-1
+        #max_length = config.block_size-1
         )
 
     print(f"### input: {word_test}\n### corrected: {corrected}")
