@@ -372,6 +372,37 @@ class WordacyDataset:
         return inputs_tensor, labels_tensor
 
 
+    def next_batch_sft2(self, idx, device):
+        if idx >= len(self.batches) or (len(self.batches) == 0):
+            return None, None
+
+        batch = self.batches[idx]
+        input_ids_list, labels_list = [], []
+        max_len = 0
+
+        for item in batch:
+            question_ids = self.encode(item[0]) + [self.sep_token_id]
+            answer_ids = self.encode(item[1]) + [self.eos_token_id]
+
+            input_ids = question_ids + answer_ids
+            labels = [-100] * len(question_ids) + answer_ids
+
+            input_ids_list.append(input_ids)
+            labels_list.append(labels)
+            max_len = max(max_len, len(input_ids))
+
+        # Padding
+        padded_inputs = []
+        padded_labels = []
+        for inp, lbl in zip(input_ids_list, labels_list):
+            padded_inputs.append(torch.tensor(inp + [self.eos_token_id] * (max_len - len(inp))))
+            padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl))))
+
+        inputs_tensor = torch.stack(padded_inputs).to(device)
+        labels_tensor = torch.stack(padded_labels).to(device)
+        return inputs_tensor, labels_tensor
+
+
 def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
