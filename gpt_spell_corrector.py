@@ -222,10 +222,10 @@ def load_txt(file_path: str) -> list:
     items = []
     with open(file_path, 'r') as f:
         for line in f:
-            line = line.strip()
-            if not line:
+            word = line.strip()
+            if not word:
                 continue
-            items.append(line)
+            items.append((word, word))
     return items
 
 class WordacyDataset:
@@ -314,15 +314,15 @@ class WordacyDataset:
         if idx >= len(self.batches) or (len(self.batches) == 0):
             return None, None
 
-        batch_words = self.batches[idx]  # список слов
+        batch = self.batches[idx]
         input_ids_list, labels_list = [], []
         max_len = 0
 
-        for w in batch_words:
+        for pair in batch:
             # input = слово как есть (может быть неправильное)
-            input_ids = self.encode(w)
+            input_ids = self.encode(pair[0]) + [self.sep_token_id]
             # target = правильное написание
-            target_ids = self.encode(w) + [self.eos_token_id]
+            target_ids = self.encode(pair[1]) + [self.eos_token_id]
 
             labels = target_ids.copy()  # считаем loss на всём target
             # на входе нет лишних токенов
@@ -333,12 +333,43 @@ class WordacyDataset:
         # Padding
         padded_inputs = []
         padded_labels = []
-        pad_id = self.sep_token_id
+
         for inp, lbl in zip(input_ids_list, labels_list):
-            padded_inputs.append(torch.tensor(inp + [pad_id]*(max_len - len(inp)), dtype=torch.long))
+            padded_inputs.append(torch.tensor(inp + [self.eos_token_id]*(max_len - len(inp)), dtype=torch.long))
             padded_labels.append(torch.tensor(lbl + [-100]*(max_len - len(lbl)), dtype=torch.long))
 
         return torch.stack(padded_inputs).to(device), torch.stack(padded_labels).to(device)
+
+
+    def next_batch_sft(self, idx, device):
+        if idx >= len(self.batches) or (len(self.batches) == 0):
+            return None, None
+
+        batch = self.batches[idx]
+        input_ids_list, labels_list = [], []
+        max_len = 0
+
+        for item in batch:
+            question_ids = self.encode(item[0]) + [self.sep_token_id]
+            answer_ids = self.encode(item[1]) + [self.eos_token_id]
+
+            input_ids = question_ids + answer_ids
+            labels = [-100] * len(question_ids) + answer_ids
+
+            input_ids_list.append(input_ids)
+            labels_list.append(labels)
+            max_len = max(max_len, len(input_ids))
+
+        # Padding
+        padded_inputs = []
+        padded_labels = []
+        for inp, lbl in zip(input_ids_list, labels_list):
+            padded_inputs.append(torch.tensor(inp + [self.eos_token_id] * (max_len - len(inp))))
+            padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl))))
+
+        inputs_tensor = torch.stack(padded_inputs).to(device)
+        labels_tensor = torch.stack(padded_labels).to(device)
+        return inputs_tensor, labels_tensor
 
 
 def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
@@ -352,7 +383,7 @@ def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
     for epoch in progress:
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.get_batch_sft(id, device)
+            xb, yb = train_ds.next_batch_sft(id, device)
 
             # evaluate the loss
             logits, loss = model(xb, yb)
@@ -369,9 +400,8 @@ def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
 
 if __name__ == "__main__":
 
-    train_words = load_txt("datasets/dictionary-8k.txt")
-
-    train_words = [
+    test_words = [
+        ("wrng","wrong"),
         ("machine", "machine"),
         ("learning", "learning"),
         ("hello", "hello"),
@@ -381,9 +411,15 @@ if __name__ == "__main__":
         ("deep", "deep"),
         ("neural","neural"),
         ("network", "network"),
-        ("transform","transform"),
-        ("wrng","wrong"),
+        ("transform", "transform"),
+        ("attention", "attention"),
+        ("ottention", "attention"),
+        ("ettention", "attention"),
+        ("uttention", "attention"),
+        ("ittention", "attention"),
         ]
+
+    train_words = load_txt("datasets/dictionary-8k.txt") + test_words
 
     config = GPTConfig()
     train_ds = None
@@ -395,7 +431,7 @@ if __name__ == "__main__":
         config = GPTConfig(**checkpoint["config"])
         state_dict = checkpoint["state_dict"]
 
-        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=16)
         print(f"::loaded, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
@@ -403,7 +439,7 @@ if __name__ == "__main__":
         model.load_state_dict(state_dict)
     else:
 
-        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=16)
         print(f"::create, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
@@ -412,17 +448,17 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            learning_rate=3e-5,
-            max_epochs=100,
+            learning_rate=1e-4,
+            max_epochs=200,
         )
 
-        # torch.save({
-        #     "state_dict": model.state_dict(),
-        #     "config": config.__dict__,
-        # }, model_path)
+        torch.save({
+            "state_dict": model.state_dict(),
+            "config": config.__dict__,
+        }, model_path)
     ####################################################################################################################
 
-    word_test = "transform"
+    word_test = "ottention"
 
     corrected = generate_new_text_sft(
         word_test,

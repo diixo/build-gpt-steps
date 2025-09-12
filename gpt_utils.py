@@ -45,5 +45,5 @@ def generate_new_text_sft(prompt: str, model, enc, device, device_type, max_new_
             if next_id.item() == enc.eos_token_id:
                 break
 
-    decoded = xgen[0, len(inputs):].tolist()
+    decoded = xgen[0, :].tolist()
     return enc.decode(decoded)
