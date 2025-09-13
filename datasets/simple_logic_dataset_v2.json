@@ -1,0 +1,1002 @@
+[
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Bob put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Use basic causality.",
+    "input": "If you don’t water a plant for many days, what will happen?",
+    "output": "The plant will dry out and may die."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Anna went to the kitchen. Then Tom went to the garden. Where is Anna?",
+    "output": "Anna is in the kitchen."
+  },
+  {
+    "instruction": "Use basic causality.",
+    "input": "If you don’t water a plant for many days, what will happen?",
+    "output": "The plant will dry out and may die."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Sarah went to the hallway. Then Mary went to the kitchen. Where is Sarah?",
+    "output": "Sarah is in the hallway."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Emma opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Anna is Bob’s brother. Bob is Sarah’s mother. Who is Anna to Sarah?",
+    "output": "Anna is Sarah’s uncle."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "Sarah poured water into a cup. Then She drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Tom opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Tom put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "Emma poured water into a cup. Then She drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Mary went to the kitchen. Then Bob went to the hallway. Where is Mary?",
+    "output": "Mary is in the kitchen."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "Anna poured water into a cup. Then She drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Jack went to the office. Then John went to the bedroom. Where is Jack?",
+    "output": "Jack is in the office."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Bob is Emma’s brother. Emma is Mary’s mother. Who is Bob to Mary?",
+    "output": "Bob is Mary’s uncle."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You cut a cake into four pieces. How many pieces of cake are there now?",
+    "output": "There are four pieces."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "Sarah poured water into a cup. Then She drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You cut a cake into four pieces. How many pieces of cake are there now?",
+    "output": "There are four pieces."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Tom went to the hallway. Then Alice went to the garden. Where is Tom?",
+    "output": "Tom is in the hallway."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "John opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You cut a cake into four pieces. How many pieces of cake are there now?",
+    "output": "There are four pieces."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Emma opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Anna is Mary’s brother. Mary is John’s mother. Who is Anna to John?",
+    "output": "Anna is John’s uncle."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Emma opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Sarah went to the bedroom. Then John went to the garden. Where is Sarah?",
+    "output": "Sarah is in the bedroom."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Emma put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Jack opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Bob is Anna’s brother. Anna is Daniel’s mother. Who is Bob to Daniel?",
+    "output": "Bob is Daniel’s uncle."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You cut a cake into four pieces. How many pieces of cake are there now?",
+    "output": "There are four pieces."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Alice put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Answer using physical logic.",
+    "input": "You drop a ball from your hand. What happens?",
+    "output": "The ball falls to the ground."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Tom put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Use basic causality.",
+    "input": "If you don’t water a plant for many days, what will happen?",
+    "output": "The plant will dry out and may die."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Bob went to the kitchen. Then Daniel went to the bedroom. Where is Bob?",
+    "output": "Bob is in the kitchen."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Sarah opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Daniel is Mary’s brother. Mary is Anna’s mother. Who is Daniel to Anna?",
+    "output": "Daniel is Anna’s uncle."
+  },
+  {
+    "instruction": "Use basic causality.",
+    "input": "If you don’t water a plant for many days, what will happen?",
+    "output": "The plant will dry out and may die."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Apply basic spatial reasoning.",
+    "input": "The cat climbed onto the chair. Then it jumped onto the table. Where is the cat now?",
+    "output": "The cat is on the table."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Reason about everyday objects.",
+    "input": "If you put bread in a toaster and press the button, what will happen?",
+    "output": "The bread will be toasted."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Reason about simple actions.",
+    "input": "Sarah opened the fridge and placed an apple inside. Where is the apple?",
+    "output": "The apple is in the fridge."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Use common sense to answer.",
+    "input": "You leave your phone outside in the rain. What will happen?",
+    "output": "The phone will get wet and may stop working."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "John put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You heat water on the stove for several minutes. What happens?",
+    "output": "The water will boil."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Reason about daily life.",
+    "input": "The sun sets and it becomes dark outside. What time of day is it?",
+    "output": "It is evening or night."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "Bob poured water into a cup. Then He drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Use simple family logic.",
+    "input": "Jack is Sarah’s brother. Sarah is Emma’s mother. Who is Jack to Emma?",
+    "output": "Jack is Emma’s uncle."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "John went to the bathroom. Then Emma went to the hallway. Where is John?",
+    "output": "John is in the bathroom."
+  },
+  {
+    "instruction": "Answer logically.",
+    "input": "You cut a cake into four pieces. How many pieces of cake are there now?",
+    "output": "There are four pieces."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "John put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Reason about objects.",
+    "input": "You put a toy in a box and close the lid. Where is the toy?",
+    "output": "The toy is inside the box."
+  },
+  {
+    "instruction": "Infer the consequence.",
+    "input": "The child spilled juice on the floor. What happens next?",
+    "output": "The floor becomes wet and sticky."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Answer the question based on the story.",
+    "input": "Alice went to the bedroom. Then Daniel went to the office. Where is Alice?",
+    "output": "Alice is in the bedroom."
+  },
+  {
+    "instruction": "Decide the logical consequence.",
+    "input": "If you touch a hot stove with your hand, what will happen?",
+    "output": "You will get burned."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Use common sense.",
+    "input": "If you don’t charge your laptop battery, what will happen?",
+    "output": "The laptop will run out of power and turn off."
+  },
+  {
+    "instruction": "Apply common sense reasoning.",
+    "input": "If you put clothes in the washing machine and turn it on, what will happen?",
+    "output": "The clothes will be washed."
+  },
+  {
+    "instruction": "Decide the logical outcome.",
+    "input": "You turn off the lights in a room at night. What happens?",
+    "output": "The room becomes dark."
+  },
+  {
+    "instruction": "Use basic causality.",
+    "input": "If you don’t water a plant for many days, what will happen?",
+    "output": "The plant will dry out and may die."
+  },
+  {
+    "instruction": "Decide the logical result.",
+    "input": "Alice put ice cubes in a hot drink. What happens to the ice?",
+    "output": "The ice cubes will melt."
+  },
+  {
+    "instruction": "Infer the correct answer.",
+    "input": "John poured water into a cup. Then He drank all of it. What is in the cup now?",
+    "output": "The cup is empty."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Determine the correct outcome.",
+    "input": "The teacher gave homework to the students. What will the students do later?",
+    "output": "The students will do the homework."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Apply logical sequence.",
+    "input": "Jack bought a ticket. Then He entered the cinema. Where is Jack?",
+    "output": "Jack is in the cinema."
+  },
+  {
+    "instruction": "Decide using physical reasoning.",
+    "input": "If you blow up a balloon with too much air, what will happen?",
+    "output": "The balloon will burst."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Reason about safety.",
+    "input": "If you cross the street without looking, what might happen?",
+    "output": "You might get hit by a car."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Simple math logic.",
+    "input": "You have 3 apples. You eat 1. How many apples are left?",
+    "output": "2 apples are left."
+  },
+  {
+    "instruction": "Reason about safety.",
+    "input": "If you cross the street without looking, what might happen?",
+    "output": "You might get hit by a car."
+  },
+  {
+    "instruction": "Reason about temperature.",
+    "input": "You put ice cream in the sun on a hot day. What will happen?",
+    "output": "The ice cream will melt."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Simple math logic.",
+    "input": "You have 3 apples. You eat 1. How many apples are left?",
+    "output": "2 apples are left."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Simple math logic.",
+    "input": "You have 3 apples. You eat 1. How many apples are left?",
+    "output": "2 apples are left."
+  },
+  {
+    "instruction": "Decide using physical reasoning.",
+    "input": "If you blow up a balloon with too much air, what will happen?",
+    "output": "The balloon will burst."
+  },
+  {
+    "instruction": "Simple math logic.",
+    "input": "You have 3 apples. You eat 1. How many apples are left?",
+    "output": "2 apples are left."
+  },
+  {
+    "instruction": "Answer using time logic.",
+    "input": "You go to bed at midnight and sleep for 8 hours. What time will you wake up?",
+    "output": "You will wake up at 8 in the morning."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Reason about safety.",
+    "input": "If you cross the street without looking, what might happen?",
+    "output": "You might get hit by a car."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Apply logical sequence.",
+    "input": "Emma bought a ticket. Then She entered the cinema. Where is Emma?",
+    "output": "Emma is in the cinema."
+  },
+  {
+    "instruction": "Decide using physical reasoning.",
+    "input": "If you blow up a balloon with too much air, what will happen?",
+    "output": "The balloon will burst."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Reason about temperature.",
+    "input": "You put ice cream in the sun on a hot day. What will happen?",
+    "output": "The ice cream will melt."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Use object logic.",
+    "input": "If you lock the door with a key, what happens to the door?",
+    "output": "The door becomes locked."
+  },
+  {
+    "instruction": "Reason about temperature.",
+    "input": "You put ice cream in the sun on a hot day. What will happen?",
+    "output": "The ice cream will melt."
+  },
+  {
+    "instruction": "Answer using time logic.",
+    "input": "You go to bed at midnight and sleep for 8 hours. What time will you wake up?",
+    "output": "You will wake up at 8 in the morning."
+  },
+  {
+    "instruction": "Apply logical sequence.",
+    "input": "Alice bought a ticket. Then She entered the cinema. Where is Alice?",
+    "output": "Alice is in the cinema."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Use object logic.",
+    "input": "If you lock the door with a key, what happens to the door?",
+    "output": "The door becomes locked."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Simple math logic.",
+    "input": "You have 3 apples. You eat 1. How many apples are left?",
+    "output": "2 apples are left."
+  },
+  {
+    "instruction": "Apply cause and effect.",
+    "input": "If a glass is full of water and you keep pouring more water, what will happen?",
+    "output": "The water will spill over."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Reason about safety.",
+    "input": "If you cross the street without looking, what might happen?",
+    "output": "You might get hit by a car."
+  },
+  {
+    "instruction": "Use object logic.",
+    "input": "If you lock the door with a key, what happens to the door?",
+    "output": "The door becomes locked."
+  },
+  {
+    "instruction": "Reason about temperature.",
+    "input": "You put ice cream in the sun on a hot day. What will happen?",
+    "output": "The ice cream will melt."
+  },
+  {
+    "instruction": "Reason about safety.",
+    "input": "If you cross the street without looking, what might happen?",
+    "output": "You might get hit by a car."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Apply logical sequence.",
+    "input": "Anna bought a ticket. Then She entered the cinema. Where is Anna?",
+    "output": "Anna is in the cinema."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Reason about sounds.",
+    "input": "You drop a metal spoon on the floor. What happens?",
+    "output": "The spoon makes a loud clattering sound."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  },
+  {
+    "instruction": "Use everyday reasoning.",
+    "input": "If you forget your umbrella on a rainy day, what will happen?",
+    "output": "You will get wet."
+  }
+]
