@@ -81,11 +81,11 @@
   },
   {
     "input": "camel",
-    "output": "an animal that lives in deserts and has humps"
+    "output": "a desert animal with humps for storing fat"
   },
   {
     "input": "kangaroo",
-    "output": "an animal that jumps and carries babies in a pouch"
+    "output": "an animal that jumps and carries its young in a pouch"
   },
   {
     "input": "panda",
@@ -93,7 +93,7 @@
   },
   {
     "input": "koala",
-    "output": "an animal that lives in trees and eats eucalyptus leaves"
+    "output": "a tree-dwelling animal that eats eucalyptus leaves"
   },
   {
     "input": "crocodile",
@@ -109,7 +109,7 @@
   },
   {
     "input": "owl",
-    "output": "a bird that hunts at night"
+    "output": "a nocturnal bird that hunts at night"
   },
   {
     "input": "parrot",
@@ -117,7 +117,7 @@
   },
   {
     "input": "penguin",
-    "output": "a bird that swims but does not fly"
+    "output": "a flightless bird that swims in the sea"
   },
   {
     "input": "whale",
@@ -205,7 +205,7 @@
   },
   {
     "input": "orange",
-    "output": "a round citrus fruit with juice"
+    "output": "a color between red and yellow"
   },
   {
     "input": "grape",
@@ -261,7 +261,7 @@
   },
   {
     "input": "pizza",
-    "output": "a dish made with dough, tomato, and cheese"
+    "output": "a baked dish with dough, sauce, and cheese"
   },
   {
     "input": "sandwich",
@@ -281,7 +281,7 @@
   },
   {
     "input": "tea",
-    "output": "a hot drink made from leaves"
+    "output": "a drink made by infusing leaves in hot water"
   },
   {
     "input": "coffee",
@@ -333,19 +333,19 @@
   },
   {
     "input": "chair",
-    "output": "furniture used for sitting"
+    "output": "a piece of furniture used for sitting"
   },
   {
     "input": "table",
-    "output": "furniture used for eating or working"
+    "output": "a piece of furniture with a flat top"
   },
   {
     "input": "sofa",
-    "output": "a comfortable seat for several people"
+    "output": "a comfortable seat for multiple people"
   },
   {
     "input": "bed",
-    "output": "furniture used for sleeping"
+    "output": "a piece of furniture for sleeping"
   },
   {
     "input": "pillow",
@@ -357,7 +357,7 @@
   },
   {
     "input": "lamp",
-    "output": "a device that produces light"
+    "output": "a device that gives light"
   },
   {
     "input": "television",
@@ -393,7 +393,7 @@
   },
   {
     "input": "notebook",
-    "output": "a book of blank pages for notes"
+    "output": "a book used for writing notes"
   },
   {
     "input": "bag",
@@ -413,7 +413,7 @@
   },
   {
     "input": "mirror",
-    "output": "an object that reflects images"
+    "output": "a surface that reflects images"
   },
   {
     "input": "window",
@@ -433,19 +433,19 @@
   },
   {
     "input": "car",
-    "output": "a vehicle used for transportation"
+    "output": "a vehicle with four wheels used for driving"
   },
   {
     "input": "bus",
-    "output": "a large vehicle for public transport"
+    "output": "a large vehicle that carries many people"
   },
   {
     "input": "bicycle",
-    "output": "a two-wheeled vehicle powered by pedaling"
+    "output": "a vehicle with two wheels powered by pedaling"
   },
   {
     "input": "train",
-    "output": "a long vehicle that runs on tracks"
+    "output": "a vehicle that moves on rails"
   },
   {
     "input": "airplane",
@@ -453,11 +453,11 @@
   },
   {
     "input": "ship",
-    "output": "a large boat used for sea travel"
+    "output": "a large vehicle that travels on the sea"
   },
   {
     "input": "boat",
-    "output": "a small vehicle for water travel"
+    "output": "a small vehicle used on water"
   },
   {
     "input": "motorcycle",
@@ -465,11 +465,11 @@
   },
   {
     "input": "truck",
-    "output": "a large vehicle used for carrying goods"
+    "output": "a large vehicle for carrying goods"
   },
   {
     "input": "tram",
-    "output": "a vehicle that runs on tracks in a city"
+    "output": "a rail vehicle that runs on streets"
   },
   {
     "input": "house",
@@ -612,52 +612,12 @@
     "output": "a warm knitted piece of clothing"
   },
   {
-    "input": "car",
-    "output": "a vehicle with four wheels used for driving"
-  },
-  {
-    "input": "bus",
-    "output": "a large vehicle that carries many people"
-  },
-  {
-    "input": "train",
-    "output": "a vehicle that moves on rails"
-  },
-  {
-    "input": "airplane",
-    "output": "a vehicle that flies in the sky"
-  },
-  {
-    "input": "bicycle",
-    "output": "a vehicle with two wheels powered by pedaling"
-  },
-  {
-    "input": "motorcycle",
-    "output": "a two-wheeled motor vehicle"
-  },
-  {
-    "input": "boat",
-    "output": "a small vehicle used on water"
-  },
-  {
-    "input": "ship",
-    "output": "a large vehicle that travels on the sea"
-  },
-  {
     "input": "helicopter",
     "output": "a flying vehicle with rotating blades"
   },
   {
     "input": "subway",
     "output": "an underground train"
-  },
-  {
-    "input": "tram",
-    "output": "a train that runs on city tracks"
-  },
-  {
-    "input": "truck",
-    "output": "a large vehicle for carrying goods"
   },
   {
     "input": "taxi",
@@ -669,7 +629,7 @@
   },
   {
     "input": "hammer",
-    "output": "a tool used for hitting nails"
+    "output": "a tool used to hit nails"
   },
   {
     "input": "saw",
@@ -681,11 +641,11 @@
   },
   {
     "input": "screwdriver",
-    "output": "a tool used for turning screws"
+    "output": "a tool used to turn screws"
   },
   {
     "input": "wrench",
-    "output": "a tool used for turning bolts"
+    "output": "a tool used to turn bolts"
   },
   {
     "input": "axe",
@@ -753,7 +713,7 @@
   },
   {
     "input": "police officer",
-    "output": "a person who keeps law and order"
+    "output": "a person who enforces the law"
   },
   {
     "input": "firefighter",
@@ -769,7 +729,7 @@
   },
   {
     "input": "writer",
-    "output": "a person who writes books"
+    "output": "a person who writes books or articles"
   },
   {
     "input": "artist",
@@ -817,15 +777,15 @@
   },
   {
     "input": "bored",
-    "output": "feeling not interested"
+    "output": "feeling uninterested or tired of something"
   },
   {
     "input": "confused",
-    "output": "not understanding something"
+    "output": "not understanding something clearly"
   },
   {
     "input": "proud",
-    "output": "feeling good about yourself"
+    "output": "feeling good about your achievements"
   },
   {
     "input": "red",
@@ -850,10 +810,6 @@
   {
     "input": "white",
     "output": "the color of snow"
-  },
-  {
-    "input": "orange",
-    "output": "a color between red and yellow"
   },
   {
     "input": "purple",
@@ -901,7 +857,7 @@
   },
   {
     "input": "walk",
-    "output": "to move slowly on foot"
+    "output": "to move at a regular pace on foot"
   },
   {
     "input": "eat",
@@ -1248,10 +1204,6 @@
     "output": "written"
   },
   {
-    "input": "definately",
-    "output": "definitely"
-  },
-  {
     "input": "enviromentaly",
     "output": "environmentally"
   },
@@ -1300,10 +1252,6 @@
     "output": "coming"
   },
   {
-    "input": "definately",
-    "output": "definitely"
-  },
-  {
     "input": "dilema",
     "output": "dilemma"
   },
@@ -1316,10 +1264,6 @@
     "output": "environment"
   },
   {
-    "input": "existance",
-    "output": "existence"
-  },
-  {
     "input": "goverment",
     "output": "government"
   },
@@ -1330,10 +1274,6 @@
   {
     "input": "identicaly",
     "output": "identically"
-  },
-  {
-    "input": "immediatly",
-    "output": "immediately"
   },
   {
     "input": "independant",
@@ -1368,16 +1308,8 @@
     "output": "perseverance"
   },
   {
-    "input": "publically",
-    "output": "publicly"
-  },
-  {
     "input": "recieve",
     "output": "receive"
-  },
-  {
-    "input": "refered",
-    "output": "referred"
   },
   {
     "input": "seperate",
@@ -1388,16 +1320,8 @@
     "output": "successful"
   },
   {
-    "input": "supercede",
-    "output": "supersede"
-  },
-  {
     "input": "tommorow",
     "output": "tomorrow"
-  },
-  {
-    "input": "untill",
-    "output": "until"
   },
   {
     "input": "wich",
@@ -1406,10 +1330,6 @@
   {
     "input": "wierd",
     "output": "weird"
-  },
-  {
-    "input": "writting",
-    "output": "writing"
   },
   {
     "input": "adress",
@@ -1428,20 +1348,12 @@
     "output": "separately"
   },
   {
-    "input": "untill",
-    "output": "until"
-  },
-  {
     "input": "occurred",
     "output": "occurred"
   },
   {
     "input": "occuring",
     "output": "occurring"
-  },
-  {
-    "input": "enviromental",
-    "output": "environmental"
   },
   {
     "input": "definate",
@@ -1476,60 +1388,12 @@
     "output": "argument"
   },
   {
-    "input": "buisness",
-    "output": "business"
-  },
-  {
     "input": "concious",
     "output": "conscious"
   },
   {
     "input": "equiptment",
     "output": "equipment"
-  },
-  {
-    "input": "occured",
-    "output": "occurred"
-  },
-  {
-    "input": "kangaroo",
-    "output": "an animal that jumps and carries its young in a pouch"
-  },
-  {
-    "input": "koala",
-    "output": "a tree-dwelling animal that eats eucalyptus leaves"
-  },
-  {
-    "input": "panda",
-    "output": "a black and white bear that eats bamboo"
-  },
-  {
-    "input": "dolphin",
-    "output": "an intelligent sea animal"
-  },
-  {
-    "input": "shark",
-    "output": "a large fish with sharp teeth"
-  },
-  {
-    "input": "octopus",
-    "output": "a sea animal with eight arms"
-  },
-  {
-    "input": "eagle",
-    "output": "a large bird of prey"
-  },
-  {
-    "input": "owl",
-    "output": "a nocturnal bird that hunts at night"
-  },
-  {
-    "input": "penguin",
-    "output": "a flightless bird that swims in the sea"
-  },
-  {
-    "input": "camel",
-    "output": "a desert animal with humps for storing fat"
   },
   {
     "input": "strawberry",
@@ -1552,20 +1416,8 @@
     "output": "a dairy product made from milk"
   },
   {
-    "input": "coffee",
-    "output": "a hot drink made from roasted beans"
-  },
-  {
-    "input": "tea",
-    "output": "a drink made by infusing leaves in hot water"
-  },
-  {
     "input": "soda",
     "output": "a fizzy sweet drink"
-  },
-  {
-    "input": "pizza",
-    "output": "a baked dish with dough, sauce, and cheese"
   },
   {
     "input": "hamburger",
@@ -1574,22 +1426,6 @@
   {
     "input": "paintbrush",
     "output": "a tool used to apply paint"
-  },
-  {
-    "input": "hammer",
-    "output": "a tool used to hit nails"
-  },
-  {
-    "input": "screwdriver",
-    "output": "a tool used to turn screws"
-  },
-  {
-    "input": "drill",
-    "output": "a tool used for making holes"
-  },
-  {
-    "input": "wrench",
-    "output": "a tool used to turn bolts"
   },
   {
     "input": "vacuum",
@@ -1620,10 +1456,6 @@
     "output": "a board with wheels used for riding"
   },
   {
-    "input": "helicopter",
-    "output": "a flying vehicle with rotating blades"
-  },
-  {
     "input": "submarine",
     "output": "a vehicle that moves under water"
   },
@@ -1640,34 +1472,6 @@
     "output": "a small boat powered by paddles"
   },
   {
-    "input": "scientist",
-    "output": "a person who studies and discovers new things"
-  },
-  {
-    "input": "engineer",
-    "output": "a person who designs and builds machines"
-  },
-  {
-    "input": "pilot",
-    "output": "a person who flies airplanes"
-  },
-  {
-    "input": "firefighter",
-    "output": "a person who puts out fires"
-  },
-  {
-    "input": "police officer",
-    "output": "a person who enforces the law"
-  },
-  {
-    "input": "artist",
-    "output": "a person who creates art"
-  },
-  {
-    "input": "writer",
-    "output": "a person who writes books or articles"
-  },
-  {
     "input": "musician",
     "output": "a person who plays or composes music"
   },
@@ -1680,92 +1484,20 @@
     "output": "a person who repairs machines or vehicles"
   },
   {
-    "input": "happy",
-    "output": "feeling good and smiling"
-  },
-  {
-    "input": "sad",
-    "output": "feeling unhappy or crying"
-  },
-  {
-    "input": "angry",
-    "output": "feeling mad or upset"
-  },
-  {
-    "input": "excited",
-    "output": "feeling very happy and full of energy"
-  },
-  {
-    "input": "bored",
-    "output": "feeling uninterested or tired of something"
-  },
-  {
-    "input": "tired",
-    "output": "feeling without energy"
-  },
-  {
     "input": "nervous",
     "output": "feeling anxious or worried"
-  },
-  {
-    "input": "proud",
-    "output": "feeling good about your achievements"
   },
   {
     "input": "scared",
     "output": "feeling afraid"
   },
   {
-    "input": "confused",
-    "output": "not understanding something clearly"
-  },
-  {
-    "input": "ettention",
-    "output": "attention"
-  },
-  {
     "input": "speling",
     "output": "spelling"
   },
   {
-    "input": "recieve",
-    "output": "receive"
-  },
-  {
-    "input": "adress",
-    "output": "address"
-  },
-  {
-    "input": "definately",
-    "output": "definitely"
-  },
-  {
-    "input": "occured",
-    "output": "occurred"
-  },
-  {
-    "input": "enviroment",
-    "output": "environment"
-  },
-  {
-    "input": "seperate",
-    "output": "separate"
-  },
-  {
-    "input": "wich",
-    "output": "which"
-  },
-  {
-    "input": "beleive",
-    "output": "believe"
-  },
-  {
     "input": "accomodate",
     "output": "accommodate"
-  },
-  {
-    "input": "acheive",
-    "output": "achieve"
   },
   {
     "input": "agressive",
@@ -1776,32 +1508,8 @@
     "output": "apparent"
   },
   {
-    "input": "arguement",
-    "output": "argument"
-  },
-  {
-    "input": "begining",
-    "output": "beginning"
-  },
-  {
-    "input": "beleive",
-    "output": "believe"
-  },
-  {
     "input": "calender",
     "output": "calendar"
-  },
-  {
-    "input": "cemetary",
-    "output": "cemetery"
-  },
-  {
-    "input": "concious",
-    "output": "conscious"
-  },
-  {
-    "input": "definately",
-    "output": "definitely"
   },
   {
     "input": "dissapoint",
@@ -1810,10 +1518,6 @@
   {
     "input": "embarass",
     "output": "embarrass"
-  },
-  {
-    "input": "existance",
-    "output": "existence"
   },
   {
     "input": "foriegn",
@@ -1828,140 +1532,12 @@
     "output": "harass"
   },
   {
-    "input": "independant",
-    "output": "independent"
-  },
-  {
     "input": "jewellry",
     "output": "jewelry"
   },
   {
-    "input": "knowlege",
-    "output": "knowledge"
-  },
-  {
     "input": "librery",
     "output": "library"
-  },
-  {
-    "input": "maintainance",
-    "output": "maintenance"
-  },
-  {
-    "input": "neccessary",
-    "output": "necessary"
-  },
-  {
-    "input": "occurence",
-    "output": "occurrence"
-  },
-  {
-    "input": "persistant",
-    "output": "persistent"
-  },
-  {
-    "input": "priviledge",
-    "output": "privilege"
-  },
-  {
-    "input": "recieve",
-    "output": "receive"
-  },
-  {
-    "input": "refered",
-    "output": "referred"
-  },
-  {
-    "input": "seperate",
-    "output": "separate"
-  },
-  {
-    "input": "supercede",
-    "output": "supersede"
-  },
-  {
-    "input": "tommorow",
-    "output": "tomorrow"
-  },
-  {
-    "input": "untill",
-    "output": "until"
-  },
-  {
-    "input": "wich",
-    "output": "which"
-  },
-  {
-    "input": "wierd",
-    "output": "weird"
-  },
-  {
-    "input": "writting",
-    "output": "writing"
-  },
-  {
-    "input": "occured",
-    "output": "occurred"
-  },
-  {
-    "input": "enviroment",
-    "output": "environment"
-  },
-  {
-    "input": "adress",
-    "output": "address"
-  },
-  {
-    "input": "beleive",
-    "output": "believe"
-  },
-  {
-    "input": "definately",
-    "output": "definitely"
-  },
-  {
-    "input": "recieve",
-    "output": "receive"
-  },
-  {
-    "input": "seperate",
-    "output": "separate"
-  },
-  {
-    "input": "wich",
-    "output": "which"
-  },
-  {
-    "input": "agressive",
-    "output": "aggressive"
-  },
-  {
-    "input": "tommorow",
-    "output": "tomorrow"
-  },
-  {
-    "input": "occured",
-    "output": "occurred"
-  },
-  {
-    "input": "enviroment",
-    "output": "environment"
-  },
-  {
-    "input": "embarass",
-    "output": "embarrass"
-  },
-  {
-    "input": "existance",
-    "output": "existence"
-  },
-  {
-    "input": "foriegn",
-    "output": "foreign"
-  },
-  {
-    "input": "gratefull",
-    "output": "grateful"
   },
   {
     "input": "armadillo",
@@ -2120,10 +1696,6 @@
     "output": "a small train-like vehicle running on city tracks"
   },
   {
-    "input": "tram",
-    "output": "a rail vehicle that runs on streets"
-  },
-  {
     "input": "geologist",
     "output": "a scientist who studies rocks and earth"
   },
@@ -2154,10 +1726,6 @@
   {
     "input": "photographer",
     "output": "a person who takes pictures professionally"
-  },
-  {
-    "input": "pilot",
-    "output": "a person who flies airplanes"
   },
   {
     "input": "coach",
@@ -2264,36 +1832,12 @@
     "output": "a device used to dry hair"
   },
   {
-    "input": "lamp",
-    "output": "a device that gives light"
-  },
-  {
-    "input": "table",
-    "output": "a piece of furniture with a flat top"
-  },
-  {
-    "input": "chair",
-    "output": "a piece of furniture used for sitting"
-  },
-  {
-    "input": "sofa",
-    "output": "a comfortable seat for multiple people"
-  },
-  {
-    "input": "bed",
-    "output": "a piece of furniture for sleeping"
-  },
-  {
     "input": "wardrobe",
     "output": "a piece of furniture used to store clothes"
   },
   {
     "input": "bookshelf",
     "output": "a shelf used to hold books"
-  },
-  {
-    "input": "mirror",
-    "output": "a surface that reflects images"
   },
   {
     "input": "curtain",
@@ -2344,22 +1888,6 @@
     "output": "to push yourself off the ground using your legs"
   },
   {
-    "input": "run",
-    "output": "to move quickly on foot"
-  },
-  {
-    "input": "walk",
-    "output": "to move at a regular pace on foot"
-  },
-  {
-    "input": "write",
-    "output": "to put words on paper"
-  },
-  {
-    "input": "read",
-    "output": "to look at words and understand them"
-  },
-  {
     "input": "draw",
     "output": "to make a picture with a pen or pencil"
   },
@@ -2370,118 +1898,6 @@
   {
     "input": "acommodate",
     "output": "accommodate"
-  },
-  {
-    "input": "adress",
-    "output": "address"
-  },
-  {
-    "input": "arguement",
-    "output": "argument"
-  },
-  {
-    "input": "begining",
-    "output": "beginning"
-  },
-  {
-    "input": "concious",
-    "output": "conscious"
-  },
-  {
-    "input": "dissapoint",
-    "output": "disappoint"
-  },
-  {
-    "input": "embarass",
-    "output": "embarrass"
-  },
-  {
-    "input": "enviroment",
-    "output": "environment"
-  },
-  {
-    "input": "existance",
-    "output": "existence"
-  },
-  {
-    "input": "foriegn",
-    "output": "foreign"
-  },
-  {
-    "input": "gratefull",
-    "output": "grateful"
-  },
-  {
-    "input": "harrass",
-    "output": "harass"
-  },
-  {
-    "input": "independant",
-    "output": "independent"
-  },
-  {
-    "input": "jewellry",
-    "output": "jewelry"
-  },
-  {
-    "input": "knowlege",
-    "output": "knowledge"
-  },
-  {
-    "input": "maintainance",
-    "output": "maintenance"
-  },
-  {
-    "input": "neccessary",
-    "output": "necessary"
-  },
-  {
-    "input": "occurence",
-    "output": "occurrence"
-  },
-  {
-    "input": "persistant",
-    "output": "persistent"
-  },
-  {
-    "input": "priviledge",
-    "output": "privilege"
-  },
-  {
-    "input": "recieve",
-    "output": "receive"
-  },
-  {
-    "input": "refered",
-    "output": "referred"
-  },
-  {
-    "input": "seperate",
-    "output": "separate"
-  },
-  {
-    "input": "supercede",
-    "output": "supersede"
-  },
-  {
-    "input": "tommorow",
-    "output": "tomorrow"
-  },
-  {
-    "input": "untill",
-    "output": "until"
-  },
-  {
-    "input": "wich",
-    "output": "which"
-  },
-  {
-    "input": "wierd",
-    "output": "weird"
-  },
-  {
-    "input": "writting",
-    "output": "writing"
   },
   {
     "input": "chameleon",
@@ -2552,10 +1968,6 @@
     "output": "pages bound together containing information"
   },
   {
-    "input": "notebook",
-    "output": "a book used for writing notes"
-  },
-  {
     "input": "smile",
     "output": "to make a happy expression with your mouth"
   },
@@ -2608,10 +2020,6 @@
     "output": "a pale orange-pink color"
   },
   {
-    "input": "turquoise",
-    "output": "a blue-green color"
-  },
-  {
     "input": "oval",
     "output": "a shape like a stretched circle"
   },
@@ -2624,79 +2032,19 @@
     "output": "accommodate"
   },
   {
-    "input": "acheive",
-    "output": "achieve"
-  },
-  {
-    "input": "adress",
-    "output": "address"
-  },
-  {
     "input": "alot",
     "output": "a lot"
-  },
-  {
-    "input": "definate",
-    "output": "definite"
-  },
-  {
-    "input": "enviromental",
-    "output": "environmental"
-  },
-  {
-    "input": "occuring",
-    "output": "occurring"
-  },
-  {
-    "input": "seperately",
-    "output": "separately"
-  },
-  {
-    "input": "untill",
-    "output": "until"
-  },
-  {
-    "input": "wich",
-    "output": "which"
-  },
-  {
-    "input": "wierd",
-    "output": "weird"
   },
   {
     "input": "thier",
     "output": "their"
   },
   {
-    "input": "reciept",
-    "output": "receipt"
-  },
-  {
-    "input": "begining",
-    "output": "beginning"
-  },
-  {
-    "input": "goverment",
-    "output": "government"
-  },
-  {
     "input": "maintanance",
     "output": "maintenance"
   },
   {
-    "input": "posession",
-    "output": "possession"
-  },
-  {
-    "input": "publically",
-    "output": "publicly"
-  },
-  {
     "input": "referance",
     "output": "reference"
-  },
-  {
-    "input": "supercede",
-    "output": "supersede"
   }
 ]
