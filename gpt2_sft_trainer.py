@@ -97,11 +97,11 @@ def generate_text_greedy(prompt: str, max_length=50):
 
 
 prompts = [
-    "ottention",
-    "uttention",
-    "ettention",
-    "adtention",
-    "attension",
+    "defenitly",
+    "definitly",
+    "definately",
+    "definitley",
+    "definnitely",
 ]
 
 for prompt in prompts:
