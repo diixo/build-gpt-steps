@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ~"
+vocab_str = "#&+.0123456789'-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _~"
 
 model_path = "model.pt"
 
@@ -137,7 +137,6 @@ class GPT(nn.Module):
         logits = self.lm_head(x) # (B, T, vocab_size)
         loss = None
         if targets is not None:
-            # F.cross_entropy(ignore_index=-100) for SFT-mode
             loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-100)
         return logits, loss
 
@@ -248,6 +247,7 @@ class WordacyDataset:
         self.eos_ch = '~'
         self.eos_token_id = self.stoi[self.eos_ch]
         self.sep_token_id = 0   # separator symbol=" " has 0-index into stoi.
+        self.pad_token_id = self.stoi['_']
 
         self.context_size = context_size
         self.batch_size = batch_size
@@ -384,18 +384,17 @@ class WordacyDataset:
             question_ids = self.encode(item[0]) + [self.sep_token_id]
             answer_ids = self.encode(item[1]) + [self.eos_token_id]
 
-            input_ids = question_ids + answer_ids
             labels = [-100] * len(question_ids) + answer_ids
 
-            input_ids_list.append(input_ids)
+            input_ids_list.append(question_ids)
             labels_list.append(labels)
-            max_len = max(max_len, len(input_ids))
+            max_len = max(max_len, len(labels))
 
         # Padding
         padded_inputs = []
         padded_labels = []
         for inp, lbl in zip(input_ids_list, labels_list):
-            padded_inputs.append(torch.tensor(inp + [self.eos_token_id] * (max_len - len(inp))))
+            padded_inputs.append(torch.tensor(inp + [self.pad_token_id] * (max_len - len(inp))))
             padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl))))
 
         inputs_tensor = torch.stack(padded_inputs).to(device)
@@ -462,7 +461,7 @@ if __name__ == "__main__":
         config = GPTConfig(**checkpoint["config"])
         state_dict = checkpoint["state_dict"]
 
-        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=16)
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
         print(f"::loaded, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
@@ -470,7 +469,7 @@ if __name__ == "__main__":
         model.load_state_dict(state_dict)
     else:
 
-        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=16)
+        train_ds = WordacyDataset(train_words, context_size=config.block_size, vocab_str=config.vocab_str, batch_size=1)
         print(f"::create, dataset: items={len(train_words)}, batches={train_ds.size()}, vocab_words={train_ds.vocab_size}")
 
         model = GPT(config)
@@ -480,7 +479,7 @@ if __name__ == "__main__":
             model,
             train_ds,
             learning_rate=1e-4,
-            max_epochs=50,
+            max_epochs=30,
         )
 
         torch.save({

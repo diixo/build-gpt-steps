@@ -6,7 +6,7 @@ from torch.nn import functional as F
 def generate_new_text(prompt: str, model, enc, device, device_type, max_length=30):
     model.eval()
 
-    inputs = enc.encode(prompt) + [enc.eos_token_id]
+    inputs = enc.encode(prompt) + [enc.sep_token_id]
     tokens = torch.tensor(inputs, dtype=torch.long).unsqueeze(0) # (1, T)
     xgen = tokens.to(device)
 
