@@ -2046,5 +2046,105 @@
   {
     "input": "referance",
     "output": "reference"
+  },
+  {
+    "input": "terrifified",
+    "output": "terrified"
+  },
+  {
+    "input": "defenitly",
+    "output": "definitely"
+  },
+  {
+    "input": "realy",
+    "output": "really"
+  },
+  {
+    "input": "inded",
+    "output": "indeed"
+  },
+  {
+    "input": "restaraunt",
+    "output": "restaurant"
+  },
+  {
+    "input": "embarassed",
+    "output": "embarrassed"
+  },
+  {
+    "input": "happend",
+    "output": "happened"
+  },
+  {
+    "input": "suprising",
+    "output": "surprising"
+  },
+  {
+    "input": "aweful",
+    "output": "awful"
+  },
+  {
+    "input": "cloths",
+    "output": "clothes"
+  },
+  {
+    "input": "excitied",
+    "output": "excited"
+  },
+  {
+    "input": "roster",
+    "output": "roaster"
+  },
+  {
+    "input": "accidently",
+    "output": "accidentally"
+  },
+  {
+    "input": "soemthing",
+    "output": "something"
+  },
+  {
+    "input": "optomistic",
+    "output": "optimistic"
+  },
+  {
+    "input": "congradulation",
+    "output": "congratulation"
+  },
+  {
+    "input": "belive",
+    "output": "believe"
+  },
+  {
+    "input": "lonley",
+    "output": "lonely"
+  },
+  {
+    "input": "divise",
+    "output": "divide"
+  },
+  {
+    "input": "definitly",
+    "output": "definitely"
+  },
+  {
+    "input": "unfortunatly",
+    "output": "unfortunately"
+  },
+  {
+    "input": "definately",
+    "output": "definitely"
+  },
+  {
+    "input": "contruction",
+    "output": "construction"
+  },
+  {
+    "input": "totaly",
+    "output": "totally"
+  },
+  {
+    "input": "definitley",
+    "output": "definitely"
   }
 ]

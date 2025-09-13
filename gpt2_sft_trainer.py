@@ -29,8 +29,13 @@ train_data = []
 with open("datasets/en-base.json", "r", encoding="utf-8") as f:
     train_data = json.load(f)
 
+with open("datasets/wordnet-verb-forms.json", "r", encoding="utf-8") as f:
+    train_data.extend(json.load(f))
+
+with open("datasets/simple_logic_dataset_v2.json", "r", encoding="utf-8") as f:
+    train_data.extend(json.load(f))
+
 print(len(train_data))
-exit(0)
 
 ################################################
 
