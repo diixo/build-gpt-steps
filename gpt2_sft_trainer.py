@@ -190,12 +190,630 @@ train_data = [
     {"input": "sweater", "output": "a warm knitted piece of clothing"}
 ]
 
+train_data += [
+    # === Transport ===
+    {"input": "car", "output": "a vehicle with four wheels used for driving"},
+    {"input": "bus", "output": "a large vehicle that carries many people"},
+    {"input": "train", "output": "a vehicle that moves on rails"},
+    {"input": "airplane", "output": "a vehicle that flies in the sky"},
+    {"input": "bicycle", "output": "a vehicle with two wheels powered by pedaling"},
+    {"input": "motorcycle", "output": "a two-wheeled motor vehicle"},
+    {"input": "boat", "output": "a small vehicle used on water"},
+    {"input": "ship", "output": "a large vehicle that travels on the sea"},
+    {"input": "helicopter", "output": "a flying vehicle with rotating blades"},
+    {"input": "subway", "output": "an underground train"},
+    {"input": "tram", "output": "a train that runs on city tracks"},
+    {"input": "truck", "output": "a large vehicle for carrying goods"},
+    {"input": "taxi", "output": "a car that carries passengers for money"},
+    {"input": "rocket", "output": "a vehicle used to travel into space"},
 
-train_data = [
-    {"input": "Translate to French: Hello", "output": "Bonjour"},
-    {"input": "Translate to French: How are you?", "output": "Comment ça va?"},
-    {"input": "ottention", "output": "attention"},
+    # === Tools ===
+    {"input": "hammer", "output": "a tool used for hitting nails"},
+    {"input": "saw", "output": "a tool used for cutting wood"},
+    {"input": "drill", "output": "a tool used for making holes"},
+    {"input": "screwdriver", "output": "a tool used for turning screws"},
+    {"input": "wrench", "output": "a tool used for turning bolts"},
+    {"input": "axe", "output": "a tool used for chopping wood"},
+    {"input": "shovel", "output": "a tool used for digging"},
+    {"input": "rake", "output": "a tool used for gathering leaves"},
+    {"input": "scissors", "output": "a tool used for cutting paper or cloth"},
+    {"input": "needle", "output": "a thin tool used for sewing"},
+    {"input": "rope", "output": "a long strong cord"},
+    {"input": "ladder", "output": "a tool used to climb up and down"},
+
+    # === Professions ===
+    {"input": "teacher", "output": "a person who helps students learn"},
+    {"input": "doctor", "output": "a person who helps sick people"},
+    {"input": "nurse", "output": "a person who helps doctors and patients"},
+    {"input": "farmer", "output": "a person who grows crops and raises animals"},
+    {"input": "driver", "output": "a person who drives vehicles"},
+    {"input": "pilot", "output": "a person who flies airplanes"},
+    {"input": "builder", "output": "a person who builds houses"},
+    {"input": "cook", "output": "a person who prepares food"},
+    {"input": "baker", "output": "a person who makes bread and cakes"},
+    {"input": "police officer", "output": "a person who keeps law and order"},
+    {"input": "firefighter", "output": "a person who puts out fires"},
+    {"input": "singer", "output": "a person who sings songs"},
+    {"input": "actor", "output": "a person who plays roles in movies or theater"},
+    {"input": "writer", "output": "a person who writes books"},
+    {"input": "artist", "output": "a person who creates art"},
+    {"input": "engineer", "output": "a person who designs and builds machines"},
+    {"input": "scientist", "output": "a person who studies and discovers new things"},
+    {"input": "student", "output": "a person who learns at school or university"},
+
+    # === Emotions ===
+    {"input": "happy", "output": "feeling good and smiling"},
+    {"input": "sad", "output": "feeling unhappy or crying"},
+    {"input": "angry", "output": "feeling mad or upset"},
+    {"input": "afraid", "output": "feeling scared"},
+    {"input": "surprised", "output": "feeling shocked or amazed"},
+    {"input": "tired", "output": "feeling without energy"},
+    {"input": "excited", "output": "feeling very happy and full of energy"},
+    {"input": "bored", "output": "feeling not interested"},
+    {"input": "confused", "output": "not understanding something"},
+    {"input": "proud", "output": "feeling good about yourself"},
+
+    # === Colors ===
+    {"input": "red", "output": "the color of blood or fire"},
+    {"input": "blue", "output": "the color of the sky"},
+    {"input": "green", "output": "the color of grass"},
+    {"input": "yellow", "output": "the color of the sun"},
+    {"input": "black", "output": "the color of the night"},
+    {"input": "white", "output": "the color of snow"},
+    {"input": "orange", "output": "a color between red and yellow"},
+    {"input": "purple", "output": "a color between red and blue"},
+    {"input": "pink", "output": "a light red color"},
+    {"input": "brown", "output": "the color of wood or earth"},
+    {"input": "gray", "output": "a color between black and white"},
+
+    # === Shapes ===
+    {"input": "circle", "output": "a round shape"},
+    {"input": "square", "output": "a shape with four equal sides"},
+    {"input": "triangle", "output": "a shape with three sides"},
+    {"input": "rectangle", "output": "a shape with four sides, two long and two short"},
+    {"input": "star", "output": "a shape with five or more points"},
+    {"input": "heart", "output": "a shape symbolizing love"},
+
+    # === Verbs ===
+    {"input": "run", "output": "to move quickly on foot"},
+    {"input": "walk", "output": "to move slowly on foot"},
+    {"input": "eat", "output": "to put food in the mouth and chew"},
+    {"input": "drink", "output": "to take liquid into the mouth"},
+    {"input": "sleep", "output": "to rest with eyes closed"},
+    {"input": "read", "output": "to look at words and understand them"},
+    {"input": "write", "output": "to put words on paper"},
+    {"input": "speak", "output": "to use your voice to say words"},
+    {"input": "listen", "output": "to pay attention to sounds"},
+    {"input": "play", "output": "to do something for fun"},
+    {"input": "work", "output": "to do tasks to earn money"},
+    {"input": "learn", "output": "to get knowledge or skills"},
+    {"input": "teach", "output": "to help others learn"},
+    {"input": "open", "output": "to move something so it is not closed"},
+    {"input": "close", "output": "to move something so it is shut"},
+    {"input": "buy", "output": "to get something by paying money"},
+    {"input": "sell", "output": "to give something in exchange for money"},
+
+    # === Adjectives ===
+    {"input": "big", "output": "large in size"},
+    {"input": "small", "output": "little in size"},
+    {"input": "long", "output": "not short"},
+    {"input": "short", "output": "not long"},
+    {"input": "fast", "output": "moving quickly"},
+    {"input": "slow", "output": "not fast"},
+    {"input": "hot", "output": "having high temperature"},
+    {"input": "cold", "output": "having low temperature"},
+    {"input": "strong", "output": "having power"},
+    {"input": "weak", "output": "not strong"},
+    {"input": "beautiful", "output": "very nice to look at"},
+    {"input": "ugly", "output": "not nice to look at"},
+    {"input": "new", "output": "recent, not old"},
+    {"input": "old", "output": "having many years"},
+    {"input": "good", "output": "something positive"},
+    {"input": "bad", "output": "something negative"}
 ]
+
+
+train_data += [
+    {"input": "ottention", "output": "attention"},
+    {"input": "uttention", "output": "attention"},
+    {"input": "ettention", "output": "attention"},
+    {"input": "adtention", "output": "attention"},
+    {"input": "attension", "output": "attention"},
+]
+
+
+spelling_corrections_more = [
+    {"input": "accomodation", "output": "accommodation"},
+    {"input": "acknowlege", "output": "acknowledge"},
+    {"input": "begining", "output": "beginning"},
+    {"input": "comming", "output": "coming"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "dilema", "output": "dilemma"},
+    {"input": "embarassing", "output": "embarrassing"},
+    {"input": "enviroment", "output": "environment"},
+    {"input": "existance", "output": "existence"},
+    {"input": "goverment", "output": "government"},
+    {"input": "hiearchy", "output": "hierarchy"},
+    {"input": "identicaly", "output": "identically"},
+    {"input": "immediatly", "output": "immediately"},
+    {"input": "independant", "output": "independent"},
+    {"input": "jewelery", "output": "jewelry"},
+    {"input": "knowlege", "output": "knowledge"},
+    {"input": "lollypop", "output": "lollipop"},
+    {"input": "maintainance", "output": "maintenance"},
+    {"input": "neccessary", "output": "necessary"},
+    {"input": "occurence", "output": "occurrence"},
+    {"input": "perserverance", "output": "perseverance"},
+    {"input": "publically", "output": "publicly"},
+    {"input": "recieve", "output": "receive"},
+    {"input": "refered", "output": "referred"},
+    {"input": "seperate", "output": "separate"},
+    {"input": "succesful", "output": "successful"},
+    {"input": "supercede", "output": "supersede"},
+    {"input": "tommorow", "output": "tomorrow"},
+    {"input": "untill", "output": "until"},
+    {"input": "wich", "output": "which"},
+    {"input": "wierd", "output": "weird"},
+    {"input": "writting", "output": "writing"},
+    {"input": "adress", "output": "address"},
+    {"input": "beleive", "output": "believe"},
+    {"input": "reciept", "output": "receipt"},
+    {"input": "seperately", "output": "separately"},
+    {"input": "untill", "output": "until"},
+    {"input": "occurred", "output": "occurred"},
+    {"input": "occuring", "output": "occurring"},
+    {"input": "enviromental", "output": "environmental"},
+    {"input": "definate", "output": "definite"},
+    {"input": "ocassion", "output": "occasion"},
+    {"input": "priviledge", "output": "privilege"},
+    {"input": "excersize", "output": "exercise"},
+    {"input": "wiches", "output": "which"},
+    {"input": "reciepts", "output": "receipts"},
+    {"input": "acheive", "output": "achieve"},
+    {"input": "arguement", "output": "argument"},
+    {"input": "buisness", "output": "business"},
+    {"input": "concious", "output": "conscious"},
+    {"input": "equiptment", "output": "equipment"},
+    {"input": "occured", "output": "occurred"}
+]
+
+
+new_examples = [
+    # === Animals ===
+    {"input": "kangaroo", "output": "an animal that jumps and carries its young in a pouch"},
+    {"input": "koala", "output": "a tree-dwelling animal that eats eucalyptus leaves"},
+    {"input": "panda", "output": "a black and white bear that eats bamboo"},
+    {"input": "dolphin", "output": "an intelligent sea animal"},
+    {"input": "shark", "output": "a large fish with sharp teeth"},
+    {"input": "octopus", "output": "a sea animal with eight arms"},
+    {"input": "eagle", "output": "a large bird of prey"},
+    {"input": "owl", "output": "a nocturnal bird that hunts at night"},
+    {"input": "penguin", "output": "a flightless bird that swims in the sea"},
+    {"input": "camel", "output": "a desert animal with humps for storing fat"},
+
+    # === Food & Drinks ===
+    {"input": "strawberry", "output": "a small red fruit"},
+    {"input": "blueberry", "output": "a small blue fruit"},
+    {"input": "lettuce", "output": "a leafy vegetable used in salads"},
+    {"input": "spinach", "output": "a green leafy vegetable"},
+    {"input": "yogurt", "output": "a dairy product made from milk"},
+    {"input": "coffee", "output": "a hot drink made from roasted beans"},
+    {"input": "tea", "output": "a drink made by infusing leaves in hot water"},
+    {"input": "soda", "output": "a fizzy sweet drink"},
+    {"input": "pizza", "output": "a baked dish with dough, sauce, and cheese"},
+    {"input": "hamburger", "output": "a sandwich with a meat patty in a bun"},
+
+    # === Tools & Objects ===
+    {"input": "paintbrush", "output": "a tool used to apply paint"},
+    {"input": "hammer", "output": "a tool used to hit nails"},
+    {"input": "screwdriver", "output": "a tool used to turn screws"},
+    {"input": "drill", "output": "a tool used for making holes"},
+    {"input": "wrench", "output": "a tool used to turn bolts"},
+    {"input": "vacuum", "output": "a machine used to clean floors"},
+    {"input": "microwave", "output": "a device used to heat food quickly"},
+    {"input": "refrigerator", "output": "a machine used to keep food cold"},
+    {"input": "oven", "output": "a device used to bake or roast food"},
+    {"input": "washing machine", "output": "a machine used to clean clothes"},
+
+    # === Transport ===
+    {"input": "scooter", "output": "a small two-wheeled vehicle"},
+    {"input": "skateboard", "output": "a board with wheels used for riding"},
+    {"input": "helicopter", "output": "a flying vehicle with rotating blades"},
+    {"input": "submarine", "output": "a vehicle that moves under water"},
+    {"input": "hot air balloon", "output": "a balloon that flies using heated air"},
+    {"input": "canoe", "output": "a small narrow boat"},
+    {"input": "kayak", "output": "a small boat powered by paddles"},
+
+    # === Professions ===
+    {"input": "scientist", "output": "a person who studies and discovers new things"},
+    {"input": "engineer", "output": "a person who designs and builds machines"},
+    {"input": "pilot", "output": "a person who flies airplanes"},
+    {"input": "firefighter", "output": "a person who puts out fires"},
+    {"input": "police officer", "output": "a person who enforces the law"},
+    {"input": "artist", "output": "a person who creates art"},
+    {"input": "writer", "output": "a person who writes books or articles"},
+    {"input": "musician", "output": "a person who plays or composes music"},
+    {"input": "chef", "output": "a person who cooks professionally"},
+    {"input": "mechanic", "output": "a person who repairs machines or vehicles"},
+
+    # === Emotions / Adjectives ===
+    {"input": "happy", "output": "feeling good and smiling"},
+    {"input": "sad", "output": "feeling unhappy or crying"},
+    {"input": "angry", "output": "feeling mad or upset"},
+    {"input": "excited", "output": "feeling very happy and full of energy"},
+    {"input": "bored", "output": "feeling uninterested or tired of something"},
+    {"input": "tired", "output": "feeling without energy"},
+    {"input": "nervous", "output": "feeling anxious or worried"},
+    {"input": "proud", "output": "feeling good about your achievements"},
+    {"input": "scared", "output": "feeling afraid"},
+    {"input": "confused", "output": "not understanding something clearly"},
+
+    # === Spelling corrections ===
+    {"input": "ettention", "output": "attention"},
+    {"input": "speling", "output": "spelling"},
+    {"input": "recieve", "output": "receive"},
+    {"input": "adress", "output": "address"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "occured", "output": "occurred"},
+    {"input": "enviroment", "output": "environment"},
+    {"input": "seperate", "output": "separate"},
+    {"input": "wich", "output": "which"},
+    {"input": "beleive", "output": "believe"}
+]
+
+spelling_corrections = [
+    {"input": "accomodate", "output": "accommodate"},
+    {"input": "acheive", "output": "achieve"},
+    {"input": "agressive", "output": "aggressive"},
+    {"input": "apparant", "output": "apparent"},
+    {"input": "arguement", "output": "argument"},
+    {"input": "begining", "output": "beginning"},
+    {"input": "beleive", "output": "believe"},
+    {"input": "calender", "output": "calendar"},
+    {"input": "cemetary", "output": "cemetery"},
+    {"input": "concious", "output": "conscious"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "dissapoint", "output": "disappoint"},
+    {"input": "embarass", "output": "embarrass"},
+    {"input": "existance", "output": "existence"},
+    {"input": "foriegn", "output": "foreign"},
+    {"input": "gratefull", "output": "grateful"},
+    {"input": "harrass", "output": "harass"},
+    {"input": "independant", "output": "independent"},
+    {"input": "jewellry", "output": "jewelry"},
+    {"input": "knowlege", "output": "knowledge"},
+    {"input": "librery", "output": "library"},
+    {"input": "maintainance", "output": "maintenance"},
+    {"input": "neccessary", "output": "necessary"},
+    {"input": "occurence", "output": "occurrence"},
+    {"input": "persistant", "output": "persistent"},
+    {"input": "priviledge", "output": "privilege"},
+    {"input": "recieve", "output": "receive"},
+    {"input": "refered", "output": "referred"},
+    {"input": "seperate", "output": "separate"},
+    {"input": "supercede", "output": "supersede"},
+    {"input": "tommorow", "output": "tomorrow"},
+    {"input": "untill", "output": "until"},
+    {"input": "wich", "output": "which"},
+    {"input": "wierd", "output": "weird"},
+    {"input": "writting", "output": "writing"},
+    {"input": "occured", "output": "occurred"},
+    {"input": "enviroment", "output": "environment"},
+    {"input": "adress", "output": "address"},
+    {"input": "beleive", "output": "believe"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "recieve", "output": "receive"},
+    {"input": "seperate", "output": "separate"},
+    {"input": "wich", "output": "which"},
+    {"input": "agressive", "output": "aggressive"},
+    {"input": "tommorow", "output": "tomorrow"},
+    {"input": "occured", "output": "occurred"},
+    {"input": "enviroment", "output": "environment"},
+    {"input": "embarass", "output": "embarrass"},
+    {"input": "existance", "output": "existence"},
+    {"input": "foriegn", "output": "foreign"},
+    {"input": "gratefull", "output": "grateful"}
+]
+
+####################################
+
+more_examples = [
+    # === Animals ===
+    {"input": "armadillo", "output": "a small mammal with a hard shell"},
+    {"input": "platypus", "output": "a mammal that lays eggs"},
+    {"input": "sloth", "output": "a slow-moving tree-dwelling animal"},
+    {"input": "hedgehog", "output": "a small spiny mammal"},
+    {"input": "otter", "output": "a playful aquatic mammal"},
+    {"input": "beaver", "output": "an animal that builds dams in rivers"},
+    {"input": "porcupine", "output": "a rodent with sharp quills"},
+    {"input": "raccoon", "output": "a nocturnal animal with a masked face"},
+    {"input": "lemur", "output": "a primate from Madagascar"},
+    {"input": "meerkat", "output": "a small social animal living in groups"},
+
+    # === Food & Drinks ===
+    {"input": "mango", "output": "a tropical fruit with sweet orange flesh"},
+    {"input": "papaya", "output": "a tropical fruit with soft orange flesh"},
+    {"input": "pineapple", "output": "a tropical fruit with spiky skin"},
+    {"input": "coconut", "output": "a large fruit with hard shell and water inside"},
+    {"input": "broccoli", "output": "a green vegetable with many small florets"},
+    {"input": "cauliflower", "output": "a white vegetable with a compact head"},
+    {"input": "pumpkin", "output": "a large orange vegetable used in pies"},
+    {"input": "zucchini", "output": "a green summer squash"},
+    {"input": "cucumber", "output": "a long green vegetable eaten raw"},
+    {"input": "avocado", "output": "a green fruit with a large seed inside"},
+
+    # === Tools & Objects ===
+    {"input": "tape measure", "output": "a tool used to measure length"},
+    {"input": "level", "output": "a tool used to check if a surface is flat"},
+    {"input": "pliers", "output": "a tool used to grip and bend objects"},
+    {"input": "chisel", "output": "a tool used for carving wood or stone"},
+    {"input": "sander", "output": "a tool used to smooth surfaces"},
+    {"input": "drill bit", "output": "a part of a drill used to make holes"},
+    {"input": "welding mask", "output": "a protective mask used for welding"},
+    {"input": "flashlight", "output": "a portable device that emits light"},
+    {"input": "broom", "output": "a tool used for sweeping floors"},
+    {"input": "dustpan", "output": "a tool used to collect dirt from the floor"},
+
+    # === Transport ===
+    {"input": "jet ski", "output": "a small water vehicle powered by a motor"},
+    {"input": "sailboat", "output": "a boat propelled by sails"},
+    {"input": "yacht", "output": "a large luxury boat"},
+    {"input": "cruise ship", "output": "a large ship for passengers on vacation"},
+    {"input": "ferry", "output": "a boat that carries people and vehicles"},
+    {"input": "glider", "output": "a light aircraft that flies without engine"},
+    {"input": "segway", "output": "a two-wheeled personal transport device"},
+    {"input": "rickshaw", "output": "a small vehicle pulled by a person or bike"},
+    {"input": "trolley", "output": "a small train-like vehicle running on city tracks"},
+    {"input": "tram", "output": "a rail vehicle that runs on streets"},
+
+    # === Professions ===
+    {"input": "geologist", "output": "a scientist who studies rocks and earth"},
+    {"input": "biologist", "output": "a scientist who studies living organisms"},
+    {"input": "astronomer", "output": "a scientist who studies stars and planets"},
+    {"input": "historian", "output": "a person who studies history"},
+    {"input": "librarian", "output": "a person who manages books in a library"},
+    {"input": "barber", "output": "a person who cuts hair"},
+    {"input": "gardener", "output": "a person who takes care of plants"},
+    {"input": "photographer", "output": "a person who takes pictures professionally"},
+    {"input": "pilot", "output": "a person who flies airplanes"},
+    {"input": "coach", "output": "a person who trains athletes or teams"},
+
+    # === Emotions / Adjectives ===
+    {"input": "curious", "output": "having a desire to learn or know more"},
+    {"input": "jealous", "output": "feeling envy of someone else"},
+    {"input": "relaxed", "output": "feeling calm and comfortable"},
+    {"input": "energetic", "output": "full of energy"},
+    {"input": "shy", "output": "feeling nervous around people"},
+    {"input": "confident", "output": "feeling sure of yourself"},
+    {"input": "optimistic", "output": "expecting good things to happen"},
+    {"input": "pessimistic", "output": "expecting bad things to happen"},
+    {"input": "brave", "output": "ready to face danger or pain"},
+    {"input": "timid", "output": "lacking courage or confidence"},
+
+    # === Colors / Shapes ===
+    {"input": "turquoise", "output": "a blue-green color"},
+    {"input": "magenta", "output": "a purplish-red color"},
+    {"input": "beige", "output": "a pale sandy color"},
+    {"input": "maroon", "output": "a dark red color"},
+    {"input": "lavender", "output": "a light purple color"},
+    {"input": "hexagon", "output": "a shape with six sides"},
+    {"input": "pentagon", "output": "a shape with five sides"},
+    {"input": "octagon", "output": "a shape with eight sides"},
+    {"input": "ellipse", "output": "an oval shape"},
+    {"input": "diamond", "output": "a shape like a tilted square"}
+]
+
+
+more_examples_part2 = [
+    # === Tools & Household Items ===
+    {"input": "toaster", "output": "a device used to brown slices of bread"},
+    {"input": "blender", "output": "a machine used to mix or puree food"},
+    {"input": "kettle", "output": "a device used to boil water"},
+    {"input": "iron", "output": "a device used to remove wrinkles from clothes"},
+    {"input": "hair dryer", "output": "a device used to dry hair"},
+    {"input": "lamp", "output": "a device that gives light"},
+    {"input": "table", "output": "a piece of furniture with a flat top"},
+    {"input": "chair", "output": "a piece of furniture used for sitting"},
+    {"input": "sofa", "output": "a comfortable seat for multiple people"},
+    {"input": "bed", "output": "a piece of furniture for sleeping"},
+    {"input": "wardrobe", "output": "a piece of furniture used to store clothes"},
+    {"input": "bookshelf", "output": "a shelf used to hold books"},
+    {"input": "mirror", "output": "a surface that reflects images"},
+    {"input": "curtain", "output": "a piece of cloth used to cover windows"},
+    {"input": "carpet", "output": "a floor covering made of thick material"},
+
+    # === Emotions / Adjectives / Verbs ===
+    {"input": "amused", "output": "feeling entertained or pleased"},
+    {"input": "annoyed", "output": "feeling slightly angry or irritated"},
+    {"input": "grumpy", "output": "feeling irritable and unhappy"},
+    {"input": "joyful", "output": "feeling very happy"},
+    {"input": "miserable", "output": "feeling very unhappy or uncomfortable"},
+    {"input": "friendly", "output": "kind and pleasant to others"},
+    {"input": "rude", "output": "not polite"},
+    {"input": "careful", "output": "paying attention to avoid mistakes"},
+    {"input": "clumsy", "output": "not graceful or careful"},
+    {"input": "jump", "output": "to push yourself off the ground using your legs"},
+    {"input": "run", "output": "to move quickly on foot"},
+    {"input": "walk", "output": "to move at a regular pace on foot"},
+    {"input": "write", "output": "to put words on paper"},
+    {"input": "read", "output": "to look at words and understand them"},
+    {"input": "draw", "output": "to make a picture with a pen or pencil"},
+    {"input": "sing", "output": "to make musical sounds with your voice"},
+
+    # === Spelling Corrections ===
+    {"input": "acommodate", "output": "accommodate"},
+    {"input": "adress", "output": "address"},
+    {"input": "arguement", "output": "argument"},
+    {"input": "begining", "output": "beginning"},
+    {"input": "concious", "output": "conscious"},
+    {"input": "dissapoint", "output": "disappoint"},
+    {"input": "embarass", "output": "embarrass"},
+    {"input": "enviroment", "output": "environment"},
+    {"input": "existance", "output": "existence"},
+    {"input": "foriegn", "output": "foreign"},
+    {"input": "gratefull", "output": "grateful"},
+    {"input": "harrass", "output": "harass"},
+    {"input": "independant", "output": "independent"},
+    {"input": "jewellry", "output": "jewelry"},
+    {"input": "knowlege", "output": "knowledge"},
+    {"input": "maintainance", "output": "maintenance"},
+    {"input": "neccessary", "output": "necessary"},
+    {"input": "occurence", "output": "occurrence"},
+    {"input": "persistant", "output": "persistent"},
+    {"input": "priviledge", "output": "privilege"},
+    {"input": "recieve", "output": "receive"},
+    {"input": "refered", "output": "referred"},
+    {"input": "seperate", "output": "separate"},
+    {"input": "supercede", "output": "supersede"},
+    {"input": "tommorow", "output": "tomorrow"},
+    {"input": "untill", "output": "until"},
+    {"input": "wich", "output": "which"},
+    {"input": "wierd", "output": "weird"},
+    {"input": "writting", "output": "writing"}
+]
+
+more_examples_part3 = [
+    # === Animals / Plants ===
+    {"input": "chameleon", "output": "a lizard that can change its color"},
+    {"input": "gecko", "output": "a small lizard with sticky feet"},
+    {"input": "fossa", "output": "a carnivorous mammal from Madagascar"},
+    {"input": "baobab", "output": "a large African tree with a thick trunk"},
+    {"input": "cactus", "output": "a plant that stores water and has spines"},
+    {"input": "orchid", "output": "a colorful flowering plant"},
+    {"input": "mushroom", "output": "a fungus that grows in damp places"},
+    {"input": "avocet", "output": "a bird with a long curved beak"},
+    {"input": "ibis", "output": "a long-legged wading bird"},
+
+    # === Tools / Household Items ===
+    {"input": "stapler", "output": "a device used to fasten papers together"},
+    {"input": "hole punch", "output": "a device used to punch holes in paper"},
+    {"input": "alarm clock", "output": "a device that wakes you up at a set time"},
+    {"input": "fan", "output": "a device that creates air movement"},
+    {"input": "humidifier", "output": "a device that adds moisture to the air"},
+    {"input": "air purifier", "output": "a device that cleans the air"},
+    {"input": "curtain rod", "output": "a rod used to hang curtains"},
+    {"input": "books", "output": "pages bound together containing information"},
+    {"input": "notebook", "output": "a book used for writing notes"},
+
+    # === Verbs / Adjectives / Emotions ===
+    {"input": "smile", "output": "to make a happy expression with your mouth"},
+    {"input": "frown", "output": "to make an unhappy expression with your face"},
+    {"input": "laugh", "output": "to make sounds when something is funny"},
+    {"input": "cry", "output": "to produce tears from your eyes"},
+    {"input": "shout", "output": "to speak very loudly"},
+    {"input": "whisper", "output": "to speak very quietly"},
+    {"input": "calm", "output": "feeling relaxed and not upset"},
+    {"input": "anxious", "output": "feeling worried or nervous"},
+    {"input": "delighted", "output": "feeling very pleased or happy"},
+    {"input": "frustrated", "output": "feeling annoyed or upset because of problems"},
+
+    # === Colors / Shapes ===
+    {"input": "cyan", "output": "a greenish-blue color"},
+    {"input": "lime", "output": "a bright green color"},
+    {"input": "peach", "output": "a pale orange-pink color"},
+    {"input": "turquoise", "output": "a blue-green color"},
+    {"input": "oval", "output": "a shape like a stretched circle"},
+    {"input": "crescent", "output": "a shape like a half-moon"},
+
+    # === Spelling Corrections / Typos ===
+    {"input": "acomodate", "output": "accommodate"},
+    {"input": "acheive", "output": "achieve"},
+    {"input": "adress", "output": "address"},
+    {"input": "alot", "output": "a lot"},
+    {"input": "definate", "output": "definite"},
+    {"input": "enviromental", "output": "environmental"},
+    {"input": "occuring", "output": "occurring"},
+    {"input": "seperately", "output": "separately"},
+    {"input": "untill", "output": "until"},
+    {"input": "wich", "output": "which"},
+    {"input": "wierd", "output": "weird"},
+    {"input": "thier", "output": "their"},
+    {"input": "reciept", "output": "receipt"},
+    {"input": "begining", "output": "beginning"},
+    {"input": "goverment", "output": "government"},
+    {"input": "maintanance", "output": "maintenance"},
+    {"input": "posession", "output": "possession"},
+    {"input": "publically", "output": "publicly"},
+    {"input": "referance", "output": "reference"},
+    {"input": "supercede", "output": "supersede"}
+]
+
+fresh_spelling_corrections = [
+    {"input": "absolutly", "output": "absolutely"},
+    {"input": "acheived", "output": "achieved"},
+    {"input": "acknowlegde", "output": "acknowledge"},
+    {"input": "apparantly", "output": "apparently"},
+    {"input": "articel", "output": "article"},
+    {"input": "beautifull", "output": "beautiful"},
+    {"input": "beleived", "output": "believed"},
+    {"input": "buisness", "output": "business"},
+    {"input": "cemetary", "output": "cemetery"},
+    {"input": "completly", "output": "completely"},
+    {"input": "conciousness", "output": "consciousness"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "desparate", "output": "desperate"},
+    {"input": "dificult", "output": "difficult"},
+    {"input": "enviromental", "output": "environmental"},
+    {"input": "exagerate", "output": "exaggerate"},
+    {"input": "existance", "output": "existence"},
+    {"input": "forseeable", "output": "foreseeable"},
+    {"input": "freindship", "output": "friendship"},
+    {"input": "happend", "output": "happened"},
+    {"input": "heirarchy", "output": "hierarchy"},
+    {"input": "immediatly", "output": "immediately"},
+    {"input": "inconvienient", "output": "inconvenient"},
+    {"input": "independance", "output": "independence"},
+    {"input": "inteligent", "output": "intelligent"},
+    {"input": "jist", "output": "gist"},
+    {"input": "knowlegeable", "output": "knowledgeable"},
+    {"input": "liase", "output": "liaise"},
+    {"input": "millenium", "output": "millennium"},
+    {"input": "neccessarily", "output": "necessarily"},
+    {"input": "occassion", "output": "occasion"},
+    {"input": "occurrance", "output": "occurrence"},
+    {"input": "oppertunity", "output": "opportunity"},
+    {"input": "paralell", "output": "parallel"},
+    {"input": "particullar", "output": "particular"},
+    {"input": "persistant", "output": "persistent"},
+    {"input": "posession", "output": "possession"},
+    {"input": "prefered", "output": "preferred"},
+    {"input": "publically", "output": "publicly"},
+    {"input": "reccomend", "output": "recommend"},
+    {"input": "refered", "output": "referred"},
+    {"input": "religeous", "output": "religious"},
+    {"input": "sargely", "output": "largely"},
+    {"input": "seperation", "output": "separation"},
+    {"input": "supercede", "output": "supersede"},
+    {"input": "truely", "output": "truly"},
+    {"input": "untill", "output": "until"},
+    {"input": "wierdly", "output": "weirdly"},
+    {"input": "writting", "output": "writing"},
+    {"input": "writen", "output": "written"},
+    {"input": "definately", "output": "definitely"},
+    {"input": "enviromentaly", "output": "environmentally"},
+    {"input": "occured", "output": "occurred"},
+    {"input": "recieveing", "output": "receiving"},
+    {"input": "acommodation", "output": "accommodation"},
+    {"input": "esterday", "output": "yesterday"},
+    {"input": "disntance", "output": "distance"},
+    {"input": "becuase", "output": "because"},
+    {"input": "studing", "output": "studying"},
+]
+
+train_data += fresh_spelling_corrections + spelling_corrections_more + new_examples + spelling_corrections + more_examples + more_examples_part2 + more_examples_part3
+
+################################################
+train_dict = {}
+for item in train_data:
+    train_dict[item["input"]] = item["output"]
+
+train_data = []
+for k, v in train_dict.items():
+    train_data.append({"input": k, "output": v})
+
+print(len(train_data))
+
+################################################
 
 dataset = Dataset.from_list(train_data)
 
@@ -212,14 +830,14 @@ def tokenize_fn(example):
 dataset = dataset.map(tokenize_fn, batched=True)
 ###################################################################################
 
-optimizer = AdamW(model.parameters(), lr=5e-5)
+optimizer = AdamW(model.parameters(), lr=2e-5)
 
 training_args = TrainingArguments(
     #output_dir="./sft_gpt2",
-    per_device_train_batch_size=2,
-    num_train_epochs=50,
+    per_device_train_batch_size=8,
+    num_train_epochs=200,
     #learning_rate=5e-5,
-    logging_steps=1,
+    logging_steps=32,
     save_strategy="no",
     lr_scheduler_type="constant",  # фиксированный learning rate
 )
@@ -256,9 +874,11 @@ def generate_text_greedy(prompt: str, max_length=50):
 
 
 prompts = [
-    "Translate to French: Good morning",
-    "Translate to French: Thank you very much",
     "ottention",
+    "uttention",
+    "ettention",
+    "adtention",
+    "attension",
 ]
 
 for prompt in prompts:
