@@ -58,11 +58,11 @@ optimizer = AdamW(model.parameters(), lr=2e-5)
 training_args = TrainingArguments(
     #output_dir="./sft_gpt2",
     per_device_train_batch_size=8,
-    num_train_epochs=500,
+    num_train_epochs=200,
     #learning_rate=5e-5,
     logging_steps=32,
     save_strategy="no",
-    lr_scheduler_type="constant",  # фиксированный learning rate
+    lr_scheduler_type="constant",
 )
 
 # Создаем SFTTrainer
@@ -79,7 +79,6 @@ trainer.train()
 ###################################################################################
 # 5. Сохранение модели
 #trainer.save_model("./sft_gpt2")
-
 
 ###################################################################################
 # 3. Тестирование
