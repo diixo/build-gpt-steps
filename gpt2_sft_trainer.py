@@ -59,8 +59,6 @@ def tokenize_fn(example):
 
     print(tokenizer.pad_token_id)
 
-    print(input_ids)
-
     input_ids.append(tokenizer.eos_token_id)  # EOS для конца input
 
     # Токенизируем target
@@ -80,11 +78,15 @@ def tokenize_fn(example):
     # attention_mask
     attention_mask = [1 if id != tokenizer.pad_token_id else 0 for id in input_ids]
 
-    return {
+    result = {
         "input_ids": input_ids,
         "attention_mask": attention_mask,
         "labels": labels
     }
+
+    print(result)
+
+    return result
 
 dataset = dataset.map(tokenize_fn, batched=False)
 ###################################################################################
