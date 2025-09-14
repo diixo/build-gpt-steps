@@ -39,27 +39,63 @@ print(len(train_data))
 
 ################################################
 
-dataset = Dataset.from_list(train_data)
+train_data = [
+    {"input": "dog is a", "output": " animal"},
+    {"input": "knife is used for", "output": " cutting"},
+    {"input": "cat is a", "output": " pet"},
+    {"input": "speling eror example", "output": " spelling error example"},
+]
 
+dataset = Dataset.from_list(train_data)
+MAX_LENGTH = 32
 def tokenize_fn(example):
-    return tokenizer(
+    # Токенизируем input
+    input_ids = tokenizer(
         example["input"],
-        text_target=example["output"],  # text_target нужен для causal LM с labels
         truncation=True,
         padding="max_length",
-        max_length=128
-    )
+        max_length=MAX_LENGTH-1
+    )["input_ids"]
 
-dataset = dataset.map(tokenize_fn, batched=True)
+    print(tokenizer.pad_token_id)
+
+    print(input_ids)
+
+    input_ids.append(tokenizer.eos_token_id)  # EOS для конца input
+
+    # Токенизируем target
+    output_ids = tokenizer(example["output"], truncation=False)["input_ids"]
+    output_ids.append(tokenizer.eos_token_id)
+
+    # Создаем labels: сначала -100 для input
+    labels = [-100]*len(input_ids)
+    labels += output_ids
+    labels += [-100]*(MAX_LENGTH - len(labels))
+    labels = labels[:MAX_LENGTH]
+
+    # Добиваем input_ids до MAX_LENGTH
+    input_ids += [tokenizer.pad_token_id]*(MAX_LENGTH - len(input_ids))
+    input_ids = input_ids[:MAX_LENGTH]
+
+    # attention_mask
+    attention_mask = [1 if id != tokenizer.pad_token_id else 0 for id in input_ids]
+
+    return {
+        "input_ids": input_ids,
+        "attention_mask": attention_mask,
+        "labels": labels
+    }
+
+dataset = dataset.map(tokenize_fn, batched=False)
 ###################################################################################
 
-optimizer = AdamW(model.parameters(), lr=2e-5)
+optimizer = AdamW(model.parameters())
 
 training_args = TrainingArguments(
     #output_dir="./sft_gpt2",
-    per_device_train_batch_size=8,
+    per_device_train_batch_size=1,
     num_train_epochs=200,
-    #learning_rate=5e-5,
+    learning_rate=1e-4,
     logging_steps=32,
     save_strategy="no",
     lr_scheduler_type="constant",
@@ -96,11 +132,7 @@ def generate_text_greedy(prompt: str, max_length=50):
 
 
 prompts = [
-    "defenitly",
-    "definitly",
-    "definately",
-    "definitley",
-    "definnitely",
+    "dog is a",
 ]
 
 for prompt in prompts:
