@@ -26,34 +26,45 @@ MAX_LENGTH = 32
 # 3️⃣ Функция токенизации
 # -------------------------------
 def tokenize_fn(example):
-    # Токенизируем input
+    max_length=MAX_LENGTH
+
+    # токенизируем input
     input_ids = tokenizer(
-        example["input"], truncation=True, padding="max_length", max_length=MAX_LENGTH-1
-    )["input_ids"]
-    input_ids.append(tokenizer.eos_token_id)  # EOS для конца input
+        example["input"],
+        truncation=True,
+        max_length=max_length - 1,
+        add_special_tokens=False,
+    )["input_ids"] + [tokenizer.eos_token_id]
 
-    # Токенизируем target
-    output_ids = tokenizer(example["output"], truncation=False)["input_ids"]
-    output_ids.append(tokenizer.eos_token_id)
+    print(input_ids)
 
-    # Создаем labels: сначала -100 для input
-    labels = [-100]*len(input_ids)
-    labels += output_ids
-    labels += [-100]*(MAX_LENGTH - len(labels))
-    labels = labels[:MAX_LENGTH]
+    # токенизируем output
+    output_ids = tokenizer(
+        example["output"],
+        truncation=True,
+        max_length=max_length - len(input_ids),
+        add_special_tokens=False,
+    )["input_ids"] + [tokenizer.eos_token_id]
 
-    # Добиваем input_ids до MAX_LENGTH
-    input_ids += [tokenizer.pad_token_id]*(MAX_LENGTH - len(input_ids))
-    input_ids = input_ids[:MAX_LENGTH]
+    # labels: игнорируем input, учим только на output
+    labels = [-100] * len(input_ids) + output_ids
 
-    # attention_mask
-    attention_mask = [1 if id != tokenizer.pad_token_id else 0 for id in input_ids]
+    # паддинг
+    input_ids = input_ids + [tokenizer.pad_token_id] * (max_length - len(input_ids))
+    input_ids = input_ids[:max_length]
 
-    return {
+    labels = labels + [-100] * (max_length - len(labels))
+    labels = labels[:max_length]
+
+    attention_mask = [1 if t != tokenizer.pad_token_id else 0 for t in input_ids]
+
+    result = {
         "input_ids": input_ids,
         "attention_mask": attention_mask,
-        "labels": labels
+        "labels": labels,
     }
+    return result
+
 
 tokenized_dataset = dataset.map(tokenize_fn)
 
@@ -82,6 +93,7 @@ trainer = SFTTrainer(
     train_dataset=dataset,
     processing_class=tokenizer,
     args=training_args,
+    #dataset_text_field="input",
 )
 
 # -------------------------------
