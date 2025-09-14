@@ -1,15 +1,21 @@
+import torch
 from transformers import GPT2Tokenizer, AutoModelForCausalLM, TrainingArguments
 from datasets import Dataset
 from trl import SFTTrainer
+
+
+#torch.manual_seed(1337)
 
 # -------------------------------
 # 1️⃣ Подготовка данных
 # -------------------------------
 data = [
-    {"input": "dog is a", "output": " animal"},
-    {"input": "knife is used for", "output": " cutting"},
-    {"input": "cat is a", "output": " pet"},
-    {"input": "speling eror example", "output": " spelling error example"},
+    {"input": "dog is a", "output": "animal"},
+    {"input": "Dog is a", "output": "animal"},
+    {"input": "Define: dog", "output": "animal"},
+    {"input": "knife is used for", "output": "cutting"},
+    {"input": "cat is a", "output": "pet"},
+    {"input": "speling eror example:", "output": "spelling error example"},
 ]
 
 dataset = Dataset.from_list(data)
@@ -18,9 +24,11 @@ dataset = Dataset.from_list(data)
 # 2️⃣ Токенизатор
 # -------------------------------
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-tokenizer.pad_token = tokenizer.eos_token  # GPT-2 не имеет pad
 
-MAX_LENGTH = 32
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+MAX_LENGTH = 24
 
 # -------------------------------
 # 3️⃣ Функция токенизации
@@ -35,8 +43,6 @@ def tokenize_fn(example):
         max_length=max_length - 1,
         add_special_tokens=False,
     )["input_ids"] + [tokenizer.eos_token_id]
-
-    print(input_ids)
 
     # токенизируем output
     output_ids = tokenizer(
@@ -58,20 +64,20 @@ def tokenize_fn(example):
 
     attention_mask = [1 if t != tokenizer.pad_token_id else 0 for t in input_ids]
 
-    result = {
+    return {
         "input_ids": input_ids,
         "attention_mask": attention_mask,
         "labels": labels,
     }
-    return result
 
 
-tokenized_dataset = dataset.map(tokenize_fn)
+dataset = dataset.map(tokenize_fn)
 
 # -------------------------------
 # 4️⃣ Модель
 # -------------------------------
 model = AutoModelForCausalLM.from_pretrained("gpt2")
+model.to("cuda" if torch.cuda.is_available() else "cpu")
 
 # -------------------------------
 # 5️⃣ SFTTrainer
@@ -106,5 +112,10 @@ trainer.train()
 # -------------------------------
 prompt = "dog is a"
 inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-output = model.generate(**inputs, max_new_tokens=20)
+output = model.generate(
+    **inputs,
+    max_new_tokens=20,
+    do_sample=False,
+    pad_token_id=tokenizer.eos_token_id,
+    )
 print(tokenizer.decode(output[0], skip_special_tokens=True))
