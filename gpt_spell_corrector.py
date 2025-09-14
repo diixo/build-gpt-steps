@@ -40,7 +40,7 @@ class CausalSelfAttention(nn.Module):
         self.n_embd = config.n_embd
 
 
-    def forward(self, x):
+    def forward(self, x, attention_mask=None):
         B, T, C = x.size() # batch size, sequence length, embedding dimensionality (n_embd)
         # calculate query, key, values for all heads in batch and move head forward to be the batch dim
         # nh is "number of heads", hs is "head size", and C (number of channels) = nh * hs
@@ -50,7 +50,14 @@ class CausalSelfAttention(nn.Module):
         k = k.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         q = q.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
-        y = F.scaled_dot_product_attention(q, k, v, is_causal=True) # flash attention
+
+        # attention_mask: (B, T) -> (B, 1, 1, T) для broadcast
+        if attention_mask is not None:
+            attn_mask = attention_mask[:, None, None, :]  # 1 где токен есть, 0 где паддинг
+        else:
+            attn_mask = None
+
+        y = F.scaled_dot_product_attention(q, k, v, attn_mask=attn_mask, is_causal=True) # flash attention
         y = y.transpose(1, 2).contiguous().view(B, T, C) # re-assemble all head outputs side by side
         # output projection
         y = self.c_proj(y)
@@ -82,8 +89,8 @@ class Block(nn.Module):
         self.ln_2 = nn.LayerNorm(config.n_embd)
         self.mlp = MLP(config)
 
-    def forward(self, x):
-        x = x + self.attn(self.ln_1(x))
+    def forward(self, x, attention_mask=None):
+        x = x + self.attn(self.ln_1(x), attention_mask=attention_mask)
         x = x + self.mlp(self.ln_2(x))
         return x
 
@@ -120,7 +127,7 @@ class GPT(nn.Module):
             torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
 
-    def forward(self, idx, targets=None):
+    def forward(self, idx, targets=None, attention_mask=None):
         # idx is of shape (B, T)
         B, T = idx.size()
         assert T <= self.config.block_size, f"Cannot forward sequence of length {T}, block size is only {self.config.block_size}"
@@ -131,12 +138,16 @@ class GPT(nn.Module):
         x = tok_emb + pos_emb
         # forward the blocks of the transformer
         for block in self.transformer.h:
-            x = block(x)
+            x = block(x, attention_mask=attention_mask)
         # forward the final layernorm and the classifier
         x = self.transformer.ln_f(x)
         logits = self.lm_head(x) # (B, T, vocab_size)
         loss = None
         if targets is not None:
+            if attention_mask is not None:
+                # не считать паддинги в loss
+                targets = targets.clone()
+                targets[attention_mask == 0] = -100
             loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-100)
         return logits, loss
 
@@ -393,8 +404,9 @@ class WordacyDataset:
         # Padding
         padded_inputs = []
         padded_labels = []
+        pad_token_id = self.pad_token_id
         for inp, lbl in zip(input_ids_list, labels_list):
-            padded_inputs.append(torch.tensor(inp + [self.pad_token_id] * (max_len - len(inp))))
+            padded_inputs.append(torch.tensor(inp + [pad_token_id] * (max_len - len(inp))))
             padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl))))
 
         inputs_tensor = torch.stack(padded_inputs).to(device)
@@ -449,7 +461,7 @@ if __name__ == "__main__":
         ("ittention", "attention"),
         ]
 
-    train_words += load_txt("datasets/dictionary-8k.txt")
+    #train_words += load_txt("datasets/dictionary-8k.txt")
 
     config = GPTConfig()
     train_ds = None
@@ -482,10 +494,10 @@ if __name__ == "__main__":
             max_epochs=30,
         )
 
-        torch.save({
-            "state_dict": model.state_dict(),
-            "config": config.__dict__,
-        }, model_path)
+        # torch.save({
+        #     "state_dict": model.state_dict(),
+        #     "config": config.__dict__,
+        # }, model_path)
     ####################################################################################################################
 
     word_test = "ottention"
