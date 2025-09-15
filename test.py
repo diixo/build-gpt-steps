@@ -4,6 +4,8 @@ from datasets import Dataset
 from trl import SFTTrainer
 
 
+torch.manual_seed(1337)
+
 # -------------------------------
 # 1️⃣ Preparing the data
 # -------------------------------
