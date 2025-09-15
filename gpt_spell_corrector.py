@@ -53,7 +53,7 @@ class CausalSelfAttention(nn.Module):
 
         # attention_mask: (B, T) -> (B, 1, 1, T) для broadcast
         if attention_mask is not None:
-            attn_mask = attention_mask[:, None, None, :]  # 1 где токен есть, 0 где паддинг
+            attn_mask = attention_mask[:, None, None, :].to(dtype=torch.bool)
         else:
             attn_mask = None
 
@@ -385,17 +385,18 @@ class WordacyDataset:
 
     def next_batch_sft2(self, idx, device):
         if idx >= len(self.batches) or (len(self.batches) == 0):
-            return None, None
+            return None, None, None
 
         batch = self.batches[idx]
         input_ids_list, labels_list = [], []
         max_len = 0
 
         for item in batch:
-            question_ids = self.encode(item[0]) + [self.sep_token_id]
+            question_ids = self.encode(item[0])
             answer_ids = self.encode(item[1]) + [self.eos_token_id]
 
             labels = [-100] * len(question_ids) + answer_ids
+            question_ids += [self.pad_token_id]
 
             input_ids_list.append(question_ids)
             labels_list.append(labels)
@@ -404,14 +405,20 @@ class WordacyDataset:
         # Padding
         padded_inputs = []
         padded_labels = []
+        attention_mask = []
         pad_token_id = self.pad_token_id
         for inp, lbl in zip(input_ids_list, labels_list):
-            padded_inputs.append(torch.tensor(inp + [pad_token_id] * (max_len - len(inp))))
-            padded_labels.append(torch.tensor(lbl + [-100] * (max_len - len(lbl))))
+            pad_len = max_len - len(inp)
+
+            padded_inputs.append(torch.tensor(inp + [pad_token_id]*pad_len))
+            padded_labels.append(torch.tensor(lbl + [-100]*(max_len - len(lbl))))
+
+            attention_mask.append(torch.tensor([False]*len(inp) + [True]*pad_len))
 
         inputs_tensor = torch.stack(padded_inputs).to(device)
         labels_tensor = torch.stack(padded_labels).to(device)
-        return inputs_tensor, labels_tensor
+        attention_mask_tensor = torch.stack(attention_mask).to(device)
+        return inputs_tensor, labels_tensor, attention_mask_tensor
 
 
 def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
@@ -425,10 +432,10 @@ def train(model: GPT, train_ds: WordacyDataset, learning_rate, max_epochs = 20):
     for epoch in progress:
         losses = torch.zeros(max_batches)
         for id in range(max_batches):
-            xb, yb = train_ds.next_batch_sft(id, device)
+            xb, yb, attn_mask = train_ds.next_batch_sft2(id, device)
 
             # evaluate the loss
-            logits, loss = model(xb, yb)
+            logits, loss = model(xb, yb, attn_mask)
 
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
@@ -454,6 +461,7 @@ if __name__ == "__main__":
         ("neural","neural"),
         ("network", "network"),
         ("transform", "transform"),
+        ("attention", "attention"),
         ("attention", "attention"),
         ("ottention", "attention"),
         ("ettention", "attention"),
@@ -490,8 +498,8 @@ if __name__ == "__main__":
         train(
             model,
             train_ds,
-            learning_rate=1e-4,
-            max_epochs=30,
+            learning_rate=5e-5,
+            max_epochs=500,
         )
 
         # torch.save({
