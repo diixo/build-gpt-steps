@@ -5,6 +5,7 @@ from trl import SFTTrainer
 
 
 torch.manual_seed(1337)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -------------------------------
 # 1️⃣ Preparing the data
@@ -81,7 +82,7 @@ dataset = dataset.map(tokenize_fn, batched=False)
 # 4️⃣ Model
 # -------------------------------
 model = AutoModelForCausalLM.from_pretrained("gpt2")
-model.to("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
 
 # -------------------------------
 # 5️⃣ SFTTrainer
@@ -104,7 +105,6 @@ trainer = SFTTrainer(
     train_dataset=dataset,
     processing_class=tokenizer,
     args=training_args,
-    #dataset_text_field="input",
 )
 
 # -------------------------------
