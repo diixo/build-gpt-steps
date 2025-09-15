@@ -19,7 +19,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 data = [
     {"input": "Aithetic is a", "output": " company."},
     {"input": "Aithetic is a ", "output": "company."},
-    #{"input": "Define Aithetic: ", "output": "research company."},
     {"input": "What is Aithetic?", "output": " company."},
 ]
 
@@ -132,3 +131,4 @@ output = model.generate(
     )
 
 print(tokenizer.decode(output[0], skip_special_tokens=True))
+# Aithetic is a company.
