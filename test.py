@@ -4,25 +4,14 @@ from datasets import Dataset
 from trl import SFTTrainer
 
 
-#torch.manual_seed(1337)
-
 # -------------------------------
 # 1️⃣ Подготовка данных
 # -------------------------------
 data = [
-    # {"input": "dog is a", "output": " animal"},
-    # {"input": "knife is used for", "output": " cutting"},
-    # {"input": "cat is a", "output": " pet"},
-    # {"input": "speling eror example", "output": " spelling error example"},
-    {"input": "The Aithetic is", "output": "a company, that use its researches to deploy the language models."},
-    {"input": "Aithetic is a", "output": " a research company."},
-    {"input": "The Aithetic is", "output": "a company, that create a family of Small Language Models."},
-    #{"input": "Aithetic is", "output": "a technological company, that develops AI models at the technological frontier."},
-    {"input": "Aithetic is", "output": "a technological company at the technological frontier."},
-    {"input": "Aithetic is", "output": "a company, that research AI language models."},
-    {"input": "Define Aithetic: is a ", "output": "research startup company."},
+    {"input": "Aithetic is a", "output": " company."},
     {"input": "Aithetic is a ", "output": "company."},
-    {"input": "What is Aithetic?", "output": "research company."},
+    #{"input": "Define Aithetic: ", "output": "research company."},
+    {"input": "What is Aithetic?", "output": " company."},
 ]
 
 dataset = Dataset.from_list(data)
@@ -91,10 +80,10 @@ model.to("cuda" if torch.cuda.is_available() else "cpu")
 # -------------------------------
 training_args = TrainingArguments(
     #output_dir="./sft_gpt2",
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=8,  # gradient on whole batch
-    num_train_epochs=1000,
-    learning_rate=3e-5,
+    per_device_train_batch_size=1,
+    gradient_accumulation_steps=1,  # gradient on whole batch
+    num_train_epochs=100,
+    learning_rate=5e-5,
     logging_steps=32,
     save_strategy="no",
     lr_scheduler_type="constant",
@@ -122,7 +111,7 @@ prompt = "Aithetic is a"
 inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 output = model.generate(
     **inputs,
-    max_new_tokens=20,
+    max_new_tokens=2,   # 1 or 2 words with maximal probability
     do_sample=False,
     pad_token_id=tokenizer.eos_token_id,
     )
