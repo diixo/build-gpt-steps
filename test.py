@@ -5,7 +5,7 @@ from trl import SFTTrainer
 
 
 # -------------------------------
-# 1️⃣ Подготовка данных
+# 1️⃣ Preparing the data
 # -------------------------------
 data = [
     {"input": "Aithetic is a", "output": " company."},
@@ -17,7 +17,7 @@ data = [
 dataset = Dataset.from_list(data)
 
 # -------------------------------
-# 2️⃣ Токенизатор
+# 2️⃣ Tokenizer
 # -------------------------------
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
@@ -27,20 +27,25 @@ if tokenizer.pad_token is None:
 MAX_LENGTH = 32
 
 # -------------------------------
-# 3️⃣ Функция токенизации
+# 3️⃣ Tokenization
 # -------------------------------
 def tokenize_fn(example):
     max_length=MAX_LENGTH
 
-    # токенизируем input
+    # tokenizes input
     input_ids = tokenizer(
         example["input"],
         truncation=True,
         max_length=max_length - 1,
         add_special_tokens=False,
-    )["input_ids"] + [tokenizer.eos_token_id]
+    )["input_ids"]
 
-    # токенизируем output
+    # use only clear input without eos
+    attention_mask = [1]*len(input_ids) + [0]*(max_length-len(input_ids))
+
+    input_ids += [tokenizer.eos_token_id]
+
+    # tokenizes output
     output_ids = tokenizer(
         example["output"],
         truncation=True,
@@ -48,17 +53,18 @@ def tokenize_fn(example):
         add_special_tokens=False,
     )["input_ids"] + [tokenizer.eos_token_id]
 
-    # labels: игнорируем input, учим только на output
+    # labels: ignore input, train only using output
     labels = [-100] * len(input_ids) + output_ids
 
-    # паддинг
+    # Padding
     input_ids = input_ids + [tokenizer.pad_token_id] * (max_length - len(input_ids))
     input_ids = input_ids[:max_length]
 
     labels = labels + [-100] * (max_length - len(labels))
     labels = labels[:max_length]
 
-    attention_mask = [1 if t != tokenizer.pad_token_id else 0 for t in input_ids]
+    test_mask = [1 if id != tokenizer.pad_token_id else 0 for id in input_ids]
+    assert all(x == y for x, y in zip(test_mask, attention_mask))
 
     return {
         "input_ids": input_ids,
@@ -70,7 +76,7 @@ def tokenize_fn(example):
 dataset = dataset.map(tokenize_fn, batched=False)
 
 # -------------------------------
-# 4️⃣ Модель
+# 4️⃣ Model
 # -------------------------------
 model = AutoModelForCausalLM.from_pretrained("gpt2")
 model.to("cuda" if torch.cuda.is_available() else "cpu")
@@ -83,7 +89,7 @@ training_args = TrainingArguments(
     per_device_train_batch_size=1,
     gradient_accumulation_steps=1,  # gradient on whole batch
     num_train_epochs=100,
-    learning_rate=5e-5,
+    learning_rate=3e-5,
     logging_steps=32,
     save_strategy="no",
     lr_scheduler_type="constant",
@@ -100,12 +106,12 @@ trainer = SFTTrainer(
 )
 
 # -------------------------------
-# 6️⃣ Обучение
+# 6️⃣ Training
 # -------------------------------
 trainer.train()
 
 # -------------------------------
-# 7️⃣ Тест генерации
+# 7️⃣ Test of generation
 # -------------------------------
 prompt = "Aithetic is a"
 inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
