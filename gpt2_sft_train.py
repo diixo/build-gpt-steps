@@ -27,7 +27,7 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
 
-MAX_LENGTH = 32
+MAX_LENGTH = 32 # 24
 
 # -------------------------------
 # 3️⃣ Tokenization
@@ -91,12 +91,13 @@ training_args = TrainingArguments(
     #output_dir="./sft_gpt2",
     per_device_train_batch_size=1,
     gradient_accumulation_steps=1,  # gradient on whole batch
-    num_train_epochs=100,
+    num_train_epochs=150,
     learning_rate=3e-5,
     logging_steps=32,
     save_strategy="no",
     lr_scheduler_type="constant",
     max_grad_norm=1.0,
+    #logging_strategy="epoch",
 )
 
 
@@ -123,4 +124,5 @@ output = model.generate(
     do_sample=False,
     pad_token_id=tokenizer.eos_token_id,
     )
+
 print(tokenizer.decode(output[0], skip_special_tokens=True))
