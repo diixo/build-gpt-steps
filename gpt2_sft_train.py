@@ -1,3 +1,9 @@
+""" Requirements:
+transformers:   4.56.1
+torch:          2.5.1+cu118
+trl:            0.23.0
+"""
+
 import torch
 from transformers import GPT2Tokenizer, AutoModelForCausalLM, TrainingArguments
 from datasets import Dataset
