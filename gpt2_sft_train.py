@@ -27,7 +27,7 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
 
-MAX_LENGTH = 32 # 24
+MAX_LENGTH = 24 # 32
 
 # -------------------------------
 # 3️⃣ Tokenization
